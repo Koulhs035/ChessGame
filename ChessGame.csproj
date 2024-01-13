@@ -78,6 +78,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -92,6 +93,51 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chessboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chessboard2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bKnight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bRook.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bBishop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bQueen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bKing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bPawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wKnight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wBishop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wQueen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wKing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wPawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wRook.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

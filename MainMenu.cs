@@ -20,14 +20,9 @@ namespace ChessGame
 
         private void PlayLocalButton_Click(object sender, EventArgs e)
         {
-            ChessBoard chessBoard = new ChessBoard();
-            chessBoard.generateLegalMoves();
-            string allLegal = "";
-            foreach (string move in chessBoard.LegalMoves)
-            {
-                allLegal += move + '\n';
-            }
-            MessageBox.Show(allLegal);
+            ChessboardUI chessboardUI = new ChessboardUI(this, connectionString);
+            chessboardUI.Show();
+            Hide();
         }
     }
 }

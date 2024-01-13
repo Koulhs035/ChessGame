@@ -13,7 +13,7 @@ namespace ChessGame
          *   Naturally the board is displayed by White's side
         */
 
-        private char[][] Chessboard = new char[8][];
+        public char[][] Chessboard = new char[8][];
 
         // The special moves works with the same logic as a bitboard
         byte[] specialMoves = new byte[3];
@@ -44,7 +44,7 @@ namespace ChessGame
                * The left 3 bits that we have as 1 are white side's castling
                * The left bit is the A file rook, the middle bit is the king, and the right is the H file rook
                * same goes for the 3 rightmost bits, but it's black's side castle
-               * The zeros in the middle, we do not care about, it's just a barrier to view everything more neatly
+               * The zeros in the middle, we do not care about, it's just a barrier to view everything neatly
              */
 
 
@@ -177,7 +177,7 @@ namespace ChessGame
 
         }
 
-
+        // TODO: Fix the capture notation
         private void enPassant()
         {
             int leftSide = col - 1;
@@ -393,7 +393,7 @@ namespace ChessGame
         }
 
 
-        private char[] letters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
+        public static char[] letters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
         private void MovePiece(int targetRow, int targetCol)
         {
             char targetPiece = Chessboard[targetRow][targetCol];
