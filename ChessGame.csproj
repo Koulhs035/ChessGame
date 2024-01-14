@@ -139,6 +139,21 @@
   <ItemGroup>
     <None Include="Resources\wRook.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\woodChessboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\smooth-gray-wooden-textured-background-vector.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blitz.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clock.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

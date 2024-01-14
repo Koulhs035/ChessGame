@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 
 namespace ChessGame
 {
@@ -219,27 +218,25 @@ namespace ChessGame
 
         private void generateMovesKnight()
         {
-            // Possible knight move offsets
             int[] dx = { 2, 2, -2, -2, 1, 1, -1, -1 };
             int[] dy = { 1, -1, 1, -1, 2, -2, 2, -2 };
 
-            int newRow;
-            int newCol;
+            int newRow, newCol;
             for (int i = 0; i < 8; ++i)
-            { // Go through all the possible knight offsets
+            {
                 newRow = row + dx[i];
                 newCol = col + dy[i];
 
-                // Check if the new position is within the chessboard
                 if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8)
                 {
-                    if (diffColor(Chessboard[newRow][newCol]))
+                    if (Chessboard[newRow][newCol] == ' ' || diffColor(Chessboard[newRow][newCol]))
                     {
                         MovePiece(newRow, newCol);
                     }
                 }
             }
         }
+
 
         void generateMovesBishop()
         {
@@ -317,9 +314,10 @@ namespace ChessGame
                     }
                 }
             }
+            castle();
         }
 
-        void castle()
+        private void castle()
         {
             ///11100111
             byte tempByte = specialMoves[CASTLE];
@@ -331,15 +329,15 @@ namespace ChessGame
                     CheckBit(tempByte, 1) // King
                     )
                 {
-                    LegalMoves.Add("O-O");
+                    LegalMoves.Add("e1 g1");
                 }
                 // Queen's side castling
-                else if ((Chessboard[0][1] == ' ' && Chessboard[9][1] == ' ' && Chessboard[0][1] == ' ') &&
+                else if ((Chessboard[0][1] == ' ' && Chessboard[0][1] == ' ' && Chessboard[0][1] == ' ') &&
                     CheckBit(tempByte, 0) &&
                     CheckBit(tempByte, 1)
                     )
                 {
-                    LegalMoves.Add("O-O-O");
+                    LegalMoves.Add("e1 c1");
                 }
             }
             else
@@ -350,15 +348,15 @@ namespace ChessGame
                     CheckBit(tempByte, 6) // King
                     )
                 {
-                    LegalMoves.Add("o-o");
+                    LegalMoves.Add("e8 g8");
                 }
                 // Queen's side castling
-                else if ((Chessboard[7][0] == ' ' && Chessboard[7][1] == ' ' && Chessboard[7][1] == ' ') &&
+                else if ((Chessboard[7][1] == ' ' && Chessboard[7][2] == ' ' && Chessboard[7][3] == ' ') &&
                     CheckBit(tempByte, 5) &&
                     CheckBit(tempByte, 6)
                     )
                 {
-                    LegalMoves.Add("o-o-o");
+                    LegalMoves.Add("e8 c8");
                 }
             }
         }
@@ -414,24 +412,24 @@ namespace ChessGame
 
             // Get the coordinates for the moves selected
             int curCol = getNumberFromCol(sepMoves[0][0]); ;
-            int curRow = int.Parse(sepMoves[0][1].ToString()) -1 ;
+            int curRow = int.Parse(sepMoves[0][1].ToString()) - 1;
 
             int tarCol = getNumberFromCol(sepMoves[1][0]);
-            int tarRow = int.Parse(sepMoves[1][1].ToString()) - 1 ;
+            int tarRow = int.Parse(sepMoves[1][1].ToString()) - 1;
 
             // Update the chessboard
-            Chessboard[tarRow ][tarCol] = Chessboard[ curRow][ curCol];
+            Chessboard[tarRow][tarCol] = Chessboard[curRow][curCol];
             Chessboard[curRow][curCol] = ' ';
         }
 
-        
+
 
         public static char[] letters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
         private void MovePiece(int targetRow, int targetCol)
         {
             char targetPiece = Chessboard[targetRow][targetCol];
 
-            string curMove = $"{letters[col]}{row+1}" + " "  + $"{letters[targetCol]}{targetRow + 1}";
+            string curMove = $"{letters[col]}{row + 1}" + " " + $"{letters[targetCol]}{targetRow + 1}";
             LegalMoves.Add(curMove);
         }
     }
