@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace ChessGame
 {
@@ -25,7 +26,7 @@ namespace ChessGame
         // If white piece has moved forward with 2 moves, it assigns to its color the en-passant
 
 
-        private bool turn; // True for white, False for black
+        public bool turn; // True for white, False for black
         private float evaluation;
 
         //--------------------------------------------- Start Board ---------------------------------------------//
@@ -392,19 +393,45 @@ namespace ChessGame
             return turn != char.IsUpper(capturedPiece);
         }
 
+        public static int getNumberFromCol(char letter)
+        {
+            for (int i = 0; i < letters.Length; i++)
+            {
+                if (letter == letters[i])
+                {
+                    return i;
+                }
+            }
+            return 10;
+        }
+
+        public void ExecuteMove(string move)
+        {
+            // The first location e.g. b1 is the piece we selected to move
+            // The second one is the target location
+
+            string[] sepMoves = move.Split(' ');
+
+            // Get the coordinates for the moves selected
+            int curCol = getNumberFromCol(sepMoves[0][0]); ;
+            int curRow = int.Parse(sepMoves[0][1].ToString()) -1 ;
+
+            int tarCol = getNumberFromCol(sepMoves[1][0]);
+            int tarRow = int.Parse(sepMoves[1][1].ToString()) - 1 ;
+
+            // Update the chessboard
+            Chessboard[tarRow ][tarCol] = Chessboard[ curRow][ curCol];
+            Chessboard[curRow][curCol] = ' ';
+        }
+
+        
 
         public static char[] letters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
         private void MovePiece(int targetRow, int targetCol)
         {
             char targetPiece = Chessboard[targetRow][targetCol];
 
-            string curMove = $"{curPiece}{letters[targetCol]}{targetRow + 1}";
-
-            if (targetPiece != ' ')
-            {
-                curMove = $"{curPiece}x{letters[targetCol]}{targetRow + 1}";
-            }
-
+            string curMove = $"{letters[col]}{row+1}" + " "  + $"{letters[targetCol]}{targetRow + 1}";
             LegalMoves.Add(curMove);
         }
     }
