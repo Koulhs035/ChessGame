@@ -10,13 +10,13 @@ namespace ChessGame
         MainMenu mainMenu;
         int whiteTime;
         int blackTime;
-        Utility utility = new Utility();
-        public ChessboardUI(MainMenu menu, Utility util)
+        //---------------------------------------------Start Board---------------------------------------------//
+        public ChessboardUI(MainMenu menu, Utility utility)
         {
             InitializeComponent();
             InitializeBoard(); // Fixes the squares
 
-            int time = util.timeControl;
+            int time = utility.timeControl;
             whiteTime = time;
             blackTime = time;
 
@@ -26,12 +26,6 @@ namespace ChessGame
             whiteSideTimerLabel.Text = Utility.FormatTime(time);
             blackSideTimerLabel.Text = Utility.FormatTime(time);
         }
-
-        private void ChessboardUI_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            mainMenu.Close();
-        }
-
         List<Panel> squareList = new List<Panel>();
         ChessBoard chessboard = new ChessBoard();
         private void InitializeBoard()
@@ -61,38 +55,10 @@ namespace ChessGame
             updateSpecialMoveVisuals();
         }
 
-        private string FetchPieceImage(char curPiece)
-        {
-            // This makes the correct Path to get from the resources so we can update the icon
-            string piece = char.IsUpper(curPiece) ? "w" : "b";
-            switch (char.ToUpper(curPiece))
-            {
-                case 'P':
-                    piece += "Pawn";
-                    break;
-                case 'K':
-                    piece += "King";
-                    break;
-                case 'Q':
-                    piece += "Queen";
-                    break;
-                case 'R':
-                    piece += "Rook";
-                    break;
-                case 'B':
-                    piece += "Bishop";
-                    break;
-                case 'N':
-                    piece += "Knight";
-                    break;
-            }
-            return piece;
-        }
-
+        //---------------------------------------------Movement---------------------------------------------//
         string toMove = string.Empty;
-
         private void panel_MouseClick(object sender, EventArgs e)
-        {
+        {   // This is where moves happen
             chessboard.generateLegalMoves();
             Panel curPanel = sender as Panel;
            
@@ -122,11 +88,12 @@ namespace ChessGame
 
                     //TODO: Add sound effects
                 }
-
+                testLabel.Text = $"{toMove}\n{moveExecuted}";
                 toMove = string.Empty;
             }
         }
 
+        //---------------------------------------------Tools---------------------------------------------//
         private void EnableTimerIfNotEnabled()
         {
             if (!timer1.Enabled)
@@ -198,6 +165,34 @@ namespace ChessGame
             squareList[curIndex].BackgroundImage = null;
         }
 
+        private string FetchPieceImage(char curPiece)
+        {
+            // This makes the correct Path to get from Resources so we can update the icon
+            string piece = char.IsUpper(curPiece) ? "w" : "b";
+            switch (char.ToUpper(curPiece))
+            {
+                case 'P':
+                    piece += "Pawn";
+                    break;
+                case 'K':
+                    piece += "King";
+                    break;
+                case 'Q':
+                    piece += "Queen";
+                    break;
+                case 'R':
+                    piece += "Rook";
+                    break;
+                case 'B':
+                    piece += "Bishop";
+                    break;
+                case 'N':
+                    piece += "Knight";
+                    break;
+            }
+            return piece;
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (chessboard.turn)
@@ -215,6 +210,16 @@ namespace ChessGame
                 if (blackTime == 0)
                     timer1.Stop();
             }
+        }
+
+        private void ChessboardUI_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            mainMenu.Show();
+        }
+
+        private void backButton_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

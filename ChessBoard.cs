@@ -5,8 +5,6 @@ namespace ChessGame
 {
     internal class ChessBoard
     {
-
-
         /*  
          *   The pieces are represented by a Char 
          *   Upper case letters are used for white, lower case for black
@@ -26,7 +24,6 @@ namespace ChessGame
 
 
         public bool turn; // True for white, False for black
-        private float evaluation;
 
         //--------------------------------------------- Start Board ---------------------------------------------//
         public ChessBoard()
@@ -69,7 +66,6 @@ namespace ChessGame
             Chessboard[0][4] = 'K';
             Chessboard[7][4] = 'k';
         }
-
 
         void placePiece(char piece, short col)
         {
@@ -124,7 +120,6 @@ namespace ChessGame
             }
         }
 
-
         private void generateMovesPawn()
         {
             int newRow = turn ? row + 1 : row - 1; // For pawn direction
@@ -148,8 +143,6 @@ namespace ChessGame
 
                 }
             }
-
-
 
             //---Captures
             int leftCol = col - 1;
@@ -175,7 +168,6 @@ namespace ChessGame
 
         }
 
-        // TODO: Fix the capture notation
         private void enPassant()
         {
             int leftSide = col - 1;
@@ -212,7 +204,6 @@ namespace ChessGame
             }
         }
 
-
         private void generateMovesKnight()
         {
             int[] dx = { 2, 2, -2, -2, 1, 1, -1, -1 };
@@ -233,7 +224,6 @@ namespace ChessGame
                 }
             }
         }
-
 
         void generateMovesBishop()
         {
@@ -292,6 +282,7 @@ namespace ChessGame
                 }
             }
         }
+
         void generateMovesKing()
         {
             int[,] directions = {
@@ -360,7 +351,7 @@ namespace ChessGame
 
         //---------------------------------------------Tools---------------------------------------------//
 
-        static private byte SetBit(byte curByte, int pos, bool set)
+        private byte SetBit(byte curByte, int pos, bool set)
         {
             if (set)
             {
@@ -372,9 +363,7 @@ namespace ChessGame
             }
             return curByte;
         }
-
-
-        static private bool CheckBit(byte value, int bitPosition)
+        private bool CheckBit(byte value, int bitPosition)
         {
             // Creating a mask with only the bit at the specified position set to 1
             byte mask = (byte)(1 << bitPosition);
@@ -386,6 +375,12 @@ namespace ChessGame
         private bool diffColor(char capturedPiece)
         {
             return turn != char.IsUpper(capturedPiece);
+        }
+
+        private void setEnPassantZero()
+        {
+            specialMoves[WENP] = 0;
+            specialMoves[BENP] = 0;
         }
 
         public static int getNumberFromCol(char letter)
@@ -401,6 +396,9 @@ namespace ChessGame
         }
 
         public bool specialMove;
+
+        public static char[] letters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
+        //---------------------------------------------Move Execution & Notation---------------------------------------------//
         public void ExecuteMove(string move)
         {
             // The first location e.g. b1 is the piece we selected to move
@@ -409,15 +407,16 @@ namespace ChessGame
             string[] sepMoves = move.Split(' ');
 
             // Get the coordinates for the moves selected
-            int curCol = getNumberFromCol(sepMoves[0][0]); ;
-            int curRow = int.Parse(sepMoves[0][1].ToString()) - 1;
+            int curCol = getNumberFromCol(sepMoves[0][0]);
+            int curRow = (int)char.GetNumericValue(sepMoves[0][1]) - 1;
+
 
             int tarCol = getNumberFromCol(sepMoves[1][0]);
-            int tarRow = int.Parse(sepMoves[1][1].ToString()) - 1;
+            int tarRow = (int)char.GetNumericValue(sepMoves[1][1]) - 1;
 
             char tempPiece = Chessboard[curRow][curCol];
 
-           specialMove = false;
+            specialMove = false;
             int rightSide = curCol + 1;
             int leftSide = curCol - 1;
             switch (tempPiece)
@@ -439,6 +438,7 @@ namespace ChessGame
                     {
                         Chessboard[4][leftSide] = ' ';
                     }
+                    setEnPassantZero();
                     specialMove = true;
                     break;
                 case 'p':
@@ -451,16 +451,17 @@ namespace ChessGame
                     else if (rightSide < 8 && CheckBit(specialMoves[WENP], rightSide))
                     {
                         Chessboard[3][rightSide] = ' ';
-                     
+
                     }
                     else if (leftSide >= 0 && CheckBit(specialMoves[WENP], leftSide))
                     {
                         Chessboard[3][leftSide] = ' ';
                     }
+                    setEnPassantZero();
                     specialMove = true;
                     break;
                 case 'K':
-                    if ( tarCol == 2)
+                    if (tarCol == 2)
                     { // Queen's side castling
                         Chessboard[0][3] = 'R';
                         Chessboard[0][0] = ' ';
@@ -473,7 +474,7 @@ namespace ChessGame
                         specialMove = true;
                     }
                     setEnPassantZero();
-                    
+                    // Disable castling from this side
                     specialMoves[CASTLE] = SetBit(specialMoves[CASTLE], 1, false);
                     break;
                 case 'k':
@@ -490,6 +491,7 @@ namespace ChessGame
                         specialMove = true;
                     }
                     setEnPassantZero();
+                    // Disable castling from this side
                     specialMoves[CASTLE] = SetBit(specialMoves[CASTLE], 6, false);
                     break;
                 default:
@@ -514,28 +516,19 @@ namespace ChessGame
                     }
                     break;
             }
-            // Set the bits to en passant
-
-
-
 
             // Update the chessboard
             Chessboard[tarRow][tarCol] = Chessboard[curRow][curCol];
             Chessboard[curRow][curCol] = ' ';
         }
 
-        private void setEnPassantZero()
-        {
-            specialMoves[WENP] = 0;
-            specialMoves[BENP] = 0;
-        }
-
-        public static char[] letters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
         private void MovePiece(int targetRow, int targetCol)
-        {
+        {   // This adds all the legal moves in an array
             char targetPiece = Chessboard[targetRow][targetCol];
 
-            string curMove = $"{letters[col]}{row + 1}" + " " + $"{letters[targetCol]}{targetRow + 1}";
+            // The reason we use this notation e.g. e2 e4 is so we can connect it with Stockfish in the future
+            //   which uses the same notation
+            string curMove = $"{letters[col]}{row + 1} {letters[targetCol]}{targetRow + 1}";
             LegalMoves.Add(curMove);
         }
     }

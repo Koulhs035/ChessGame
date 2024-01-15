@@ -55,6 +55,9 @@
             this.User1Label = new System.Windows.Forms.Label();
             this.User2Label = new System.Windows.Forms.Label();
             this.ChessboardSquaresPanel = new System.Windows.Forms.Panel();
+            this.testLabel = new System.Windows.Forms.Label();
+            this.leftSettingsPanel = new System.Windows.Forms.Panel();
+            this.backButton = new System.Windows.Forms.Button();
             label13 = new System.Windows.Forms.Label();
             label14 = new System.Windows.Forms.Label();
             label15 = new System.Windows.Forms.Label();
@@ -75,6 +78,7 @@
             this.blackSideTimerPanel.SuspendLayout();
             this.whiteSideTimerPanel.SuspendLayout();
             this.ChessboardSquaresPanel.SuspendLayout();
+            this.leftSettingsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // label13
@@ -362,12 +366,51 @@
             this.ChessboardSquaresPanel.TabIndex = 0;
             this.ChessboardSquaresPanel.TabStop = true;
             // 
+            // testLabel
+            // 
+            this.testLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.testLabel.AutoSize = true;
+            this.testLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.testLabel.ForeColor = System.Drawing.SystemColors.Control;
+            this.testLabel.Location = new System.Drawing.Point(283, 319);
+            this.testLabel.Name = "testLabel";
+            this.testLabel.Size = new System.Drawing.Size(109, 33);
+            this.testLabel.TabIndex = 4;
+            this.testLabel.Text = "label17";
+            // 
+            // leftSettingsPanel
+            // 
+            this.leftSettingsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.leftSettingsPanel.Controls.Add(this.backButton);
+            this.leftSettingsPanel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.leftSettingsPanel.Location = new System.Drawing.Point(0, 0);
+            this.leftSettingsPanel.Name = "leftSettingsPanel";
+            this.leftSettingsPanel.Size = new System.Drawing.Size(69, 701);
+            this.leftSettingsPanel.TabIndex = 5;
+            // 
+            // backButton
+            // 
+            this.backButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.backButton.BackColor = System.Drawing.Color.Transparent;
+            this.backButton.BackgroundImage = global::ChessGame.Properties.Resources.backButton;
+            this.backButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.backButton.FlatAppearance.BorderSize = 0;
+            this.backButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.backButton.Location = new System.Drawing.Point(12, 665);
+            this.backButton.Name = "backButton";
+            this.backButton.Size = new System.Drawing.Size(41, 23);
+            this.backButton.TabIndex = 0;
+            this.backButton.UseVisualStyleBackColor = false;
+            this.backButton.Click += new System.EventHandler(this.backButton_Click);
+            // 
             // ChessboardUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(1439, 701);
+            this.Controls.Add(this.leftSettingsPanel);
+            this.Controls.Add(this.testLabel);
             this.Controls.Add(this.User2Label);
             this.Controls.Add(this.User1Label);
             this.Controls.Add(this.timerPanel);
@@ -383,6 +426,7 @@
             this.whiteSideTimerPanel.ResumeLayout(false);
             this.ChessboardSquaresPanel.ResumeLayout(false);
             this.ChessboardSquaresPanel.PerformLayout();
+            this.leftSettingsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -398,5 +442,8 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label User1Label;
         private System.Windows.Forms.Label User2Label;
+        private System.Windows.Forms.Label testLabel;
+        private System.Windows.Forms.Panel leftSettingsPanel;
+        private System.Windows.Forms.Button backButton;
     }
 }

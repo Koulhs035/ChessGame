@@ -8,6 +8,7 @@
 
         public static string FormatTime(int seconds)
         {
+            // These are all settings for the game
             int minutes = seconds / 60;
             int remainingSeconds = seconds % 60; 
             string formattedTime = $"{minutes}:{remainingSeconds:D2}";
