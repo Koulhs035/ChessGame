@@ -10,21 +10,21 @@ namespace ChessGame
         MainMenu mainMenu;
         int whiteTime;
         int blackTime;
-        public ChessboardUI(MainMenu menu, string connStr, int timeControl, string[] pNames)
+        Utility utility = new Utility();
+        public ChessboardUI(MainMenu menu, Utility util)
         {
             InitializeComponent();
-            InitializeBoard();
+            InitializeBoard(); // Fixes the squares
 
-            whiteTime = timeControl;
-            blackTime = timeControl;
+            int time = util.timeControl;
+            whiteTime = time;
+            blackTime = time;
 
             mainMenu = menu;
-            User1Label.Text = pNames[0];
-            User2Label.Text = pNames[1];
-            whiteSideTimerLabel.Text = timeControl.ToString();
-            blackSideTimerLabel.Text = timeControl.ToString();
-
-
+            User1Label.Text = utility.pNames[0];
+            User2Label.Text = utility.pNames[1];
+            whiteSideTimerLabel.Text = Utility.FormatTime(time);
+            blackSideTimerLabel.Text = Utility.FormatTime(time);
         }
 
         private void ChessboardUI_FormClosed(object sender, FormClosedEventArgs e)
@@ -44,8 +44,6 @@ namespace ChessGame
                 {
                     Panel panel = new Panel();
 
-                //    panel.MouseEnter += panel_MouseEnter;
-                //    panel.MouseLeave += panel_MouseLeave;
                     panel.MouseClick += panel_MouseClick;
 
                     panel.Size = new System.Drawing.Size(squareSize, squareSize);
@@ -54,24 +52,18 @@ namespace ChessGame
                     panel.BorderStyle = BorderStyle.Fixed3D;
 
                     panel.BackgroundImageLayout = ImageLayout.Zoom;
-                    char curPiece = chessboard.Chessboard[7 - col][row];
-                    string imagePath = FetchPieceImage(curPiece);
-                    var resourceManager = Properties.Resources.ResourceManager;
-                    panel.BackgroundImage = (Bitmap)resourceManager.GetObject(imagePath);
+
 
                     squareList.Add(panel);
                     ChessboardSquaresPanel.Controls.Add(panel);
                 }
             }
-
-
-
-
+            updateSpecialMoveVisuals();
         }
 
         private string FetchPieceImage(char curPiece)
         {
-            // This makes the correct Path to get from the resources
+            // This makes the correct Path to get from the resources so we can update the icon
             string piece = char.IsUpper(curPiece) ? "w" : "b";
             switch (char.ToUpper(curPiece))
             {
@@ -97,29 +89,18 @@ namespace ChessGame
             return piece;
         }
 
-
-        private void panel_MouseEnter(object sender, EventArgs e)
-        {
-            Panel curPanel = sender as Panel;
-            curPanel.BackColor = Color.FromArgb(80, Color.Navy);
-        }
-
         string toMove = string.Empty;
+
         private void panel_MouseClick(object sender, EventArgs e)
         {
-
-            string bruh = string.Empty;
             chessboard.generateLegalMoves();
-
             Panel curPanel = sender as Panel;
+           
             string location = curPanel.Tag.ToString();
 
-            char colLetter = location[0];
-            int row;
-            int.TryParse(location.Substring(1), out row);
-            int col = ChessBoard.getNumberFromCol(colLetter);
-            char selectedPiece = chessboard.Chessboard[row - 1][col];
-
+            int row = (int)Char.GetNumericValue(location[1]);
+            int col = ChessBoard.getNumberFromCol(location[0]);
+            
             string moveExecuted;
             if (toMove == string.Empty)
             {
@@ -127,23 +108,54 @@ namespace ChessGame
             }
             else
             {
-                moveExecuted = toMove + " " + location;
+                moveExecuted = $"{toMove} {location}";
+
                 if (chessboard.LegalMoves.Contains(moveExecuted))
                 {
-                    if (!timer1.Enabled)
-                    {
-                        timer1.Enabled = true;
-                    }
+                    EnableTimerIfNotEnabled();
                     chessboard.ExecuteMove(moveExecuted);
                     updateChessboardVisual(moveExecuted);
                     chessboard.turn = !chessboard.turn;
 
+                    if (chessboard.specialMove) updateSpecialMoveVisuals();
                     fixTimerColors();
+
+                    //TODO: Add sound effects
                 }
+
                 toMove = string.Empty;
             }
+        }
 
+        private void EnableTimerIfNotEnabled()
+        {
+            if (!timer1.Enabled)
+            {
+                timer1.Enabled = true;
+            }
+        }
 
+        private void updateSpecialMoveVisuals()
+        {   // This copies the array and changes only the background image to the correct account 
+            var resourceManager = Properties.Resources.ResourceManager;
+            char curPiece;
+            string addPiece;
+            int index;
+            for (int row = 0; row < 8; row++)
+            {
+                for (int col = 0; col < 8; col++)
+                {
+                    curPiece = chessboard.Chessboard[row][col];
+
+                    index = 7 - row + 8 * col;
+                    if (curPiece == ' ') squareList[index].BackgroundImage = null;
+                    else
+                    {
+                        addPiece = FetchPieceImage(curPiece);
+                        squareList[index].BackgroundImage = (Bitmap)resourceManager.GetObject(addPiece);
+                    }
+                }
+            }
         }
 
         private void fixTimerColors()
@@ -186,29 +198,22 @@ namespace ChessGame
             squareList[curIndex].BackgroundImage = null;
         }
 
-        private void panel_MouseLeave(object sender, EventArgs e)
-        {
-            Panel curPanel = sender as Panel;
-            curPanel.BackColor = Color.Transparent;
-
-
-        }
-
-
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (chessboard.turn)
             {
-
                 whiteTime -= 1;
-                whiteSideTimerLabel.Text = $"{whiteTime / 60}:{whiteTime % 60}";
+                whiteSideTimerLabel.Text = Utility.FormatTime(whiteTime);
+                if (whiteTime == 0)
+                    timer1.Stop();
             }
             else
             {
 
                 blackTime -= 1;
-                blackSideTimerLabel.Text = $"{blackTime / 60}:{blackTime % 60}";
-
+                blackSideTimerLabel.Text = Utility.FormatTime(blackTime);
+                if (blackTime == 0)
+                    timer1.Stop();
             }
         }
     }

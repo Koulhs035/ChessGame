@@ -258,7 +258,7 @@
             this.timerPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.timerPanel.Controls.Add(this.blackSideTimerPanel);
             this.timerPanel.Controls.Add(this.whiteSideTimerPanel);
-            this.timerPanel.Location = new System.Drawing.Point(1011, 313);
+            this.timerPanel.Location = new System.Drawing.Point(1025, 255);
             this.timerPanel.Name = "timerPanel";
             this.timerPanel.Size = new System.Drawing.Size(65, 194);
             this.timerPanel.TabIndex = 1;
@@ -315,7 +315,7 @@
             this.User1Label.AutoSize = true;
             this.User1Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.User1Label.ForeColor = System.Drawing.Color.White;
-            this.User1Label.Location = new System.Drawing.Point(407, 713);
+            this.User1Label.Location = new System.Drawing.Point(421, 655);
             this.User1Label.Name = "User1Label";
             this.User1Label.Size = new System.Drawing.Size(114, 33);
             this.User1Label.TabIndex = 2;
@@ -327,7 +327,7 @@
             this.User2Label.AutoSize = true;
             this.User2Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.User2Label.ForeColor = System.Drawing.Color.White;
-            this.User2Label.Location = new System.Drawing.Point(407, 74);
+            this.User2Label.Location = new System.Drawing.Point(421, 16);
             this.User2Label.Name = "User2Label";
             this.User2Label.Size = new System.Drawing.Size(114, 33);
             this.User2Label.TabIndex = 3;
@@ -356,7 +356,7 @@
             this.ChessboardSquaresPanel.Controls.Add(label4);
             this.ChessboardSquaresPanel.Controls.Add(label2);
             this.ChessboardSquaresPanel.Controls.Add(label1);
-            this.ChessboardSquaresPanel.Location = new System.Drawing.Point(405, 110);
+            this.ChessboardSquaresPanel.Location = new System.Drawing.Point(419, 52);
             this.ChessboardSquaresPanel.Name = "ChessboardSquaresPanel";
             this.ChessboardSquaresPanel.Size = new System.Drawing.Size(600, 600);
             this.ChessboardSquaresPanel.TabIndex = 0;
@@ -367,7 +367,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(1410, 816);
+            this.ClientSize = new System.Drawing.Size(1439, 701);
             this.Controls.Add(this.User2Label);
             this.Controls.Add(this.User1Label);
             this.Controls.Add(this.timerPanel);

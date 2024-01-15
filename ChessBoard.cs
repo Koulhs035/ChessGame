@@ -144,8 +144,6 @@ namespace ChessGame
                     if (Chessboard[newTwiceRow][col] == ' ')
                     {
                         MovePiece(newTwiceRow, col);
-                        int enpDet = turn ? WENP : BENP;
-                        specialMoves[enpDet] = SetBit(0, col, true);
                     }
 
                 }
@@ -182,35 +180,34 @@ namespace ChessGame
         {
             int leftSide = col - 1;
             int rightSide = col + 1;
-            if ((turn && row == 3)) // White side en passant
+
+            if (turn && row == 4) // White side en passant
             {
 
-                if (rightSide < 7 && CheckBit(specialMoves[BENP], rightSide))
+                if (rightSide < 8 && CheckBit(specialMoves[BENP], rightSide))
                 {
-                    Chessboard[row][col] = ' ';
-                    Chessboard[row][rightSide] = ' ';
-                    Chessboard[row + 1][rightSide] = 'P';
+                    string curMove = $"{letters[col]}{row + 1} {letters[rightSide]}{row + 2}";
+                    LegalMoves.Add(curMove);
                 }
-                else if (leftSide > 0 && CheckBit(specialMoves[BENP], leftSide))
+
+                if (leftSide >= 0 && CheckBit(specialMoves[BENP], leftSide))
                 {
-                    Chessboard[row][col] = ' ';
-                    Chessboard[row][leftSide] = ' ';
-                    Chessboard[row + 1][leftSide] = 'P';
+                    string curMove = $"{letters[col]}{row + 1} {letters[leftSide]}{row + 2}";
+                    LegalMoves.Add(curMove);
                 }
             }
-            else if ((!turn && row == 4)) // Black side en passant
+            else if (!turn && row == 3) // Black side en passant
             {
-                if (rightSide < 7 && CheckBit(specialMoves[WENP], rightSide))
+                if (rightSide < 8 && CheckBit(specialMoves[WENP], rightSide))
                 {
-                    Chessboard[row][col] = ' ';
-                    Chessboard[row][rightSide] = ' ';
-                    Chessboard[row - 1][rightSide] = 'p';
+                    string curMove = $"{letters[col]}{row + 1} {letters[rightSide]}{row}";
+                    LegalMoves.Add(curMove);
                 }
-                else if (leftSide > 0 && CheckBit(specialMoves[WENP], leftSide))
+
+                if (leftSide >= 0 && CheckBit(specialMoves[WENP], leftSide))
                 {
-                    Chessboard[row][col] = ' ';
-                    Chessboard[row][leftSide] = ' ';
-                    Chessboard[row - 1][leftSide] = 'p';
+                    string curMove = $"{letters[col]}{row + 1} {letters[leftSide]}{row}";
+                    LegalMoves.Add(curMove);
                 }
             }
         }
@@ -403,6 +400,7 @@ namespace ChessGame
             return 10;
         }
 
+        public bool specialMove;
         public void ExecuteMove(string move)
         {
             // The first location e.g. b1 is the piece we selected to move
@@ -417,12 +415,120 @@ namespace ChessGame
             int tarCol = getNumberFromCol(sepMoves[1][0]);
             int tarRow = int.Parse(sepMoves[1][1].ToString()) - 1;
 
+            char tempPiece = Chessboard[curRow][curCol];
+
+           specialMove = false;
+            int rightSide = curCol + 1;
+            int leftSide = curCol - 1;
+            switch (tempPiece)
+            {
+
+                case 'P':
+                    // Twice forward check
+                    if (tarRow == 3 && curRow == 1)
+                        specialMoves[WENP] = SetBit(0, curCol, true);
+
+                    // En passant executed
+                    if (curRow != 4) break;
+
+                    else if (rightSide < 8 && CheckBit(specialMoves[BENP], rightSide))
+                    {
+                        Chessboard[4][rightSide] = ' ';
+                    }
+                    else if (leftSide >= 0 && CheckBit(specialMoves[BENP], leftSide))
+                    {
+                        Chessboard[4][leftSide] = ' ';
+                    }
+                    specialMove = true;
+                    break;
+                case 'p':
+                    // Twice forward check
+                    if (tempPiece == 'p' && tarRow == 4 && curRow == 6)
+                        specialMoves[BENP] = SetBit(0, curCol, true);
+
+                    // En passant executed
+                    if (curRow != 3) break;
+                    else if (rightSide < 8 && CheckBit(specialMoves[WENP], rightSide))
+                    {
+                        Chessboard[3][rightSide] = ' ';
+                     
+                    }
+                    else if (leftSide >= 0 && CheckBit(specialMoves[WENP], leftSide))
+                    {
+                        Chessboard[3][leftSide] = ' ';
+                    }
+                    specialMove = true;
+                    break;
+                case 'K':
+                    if ( tarCol == 2)
+                    { // Queen's side castling
+                        Chessboard[0][3] = 'R';
+                        Chessboard[0][0] = ' ';
+                        specialMove = true;
+                    }
+                    else if (tarCol == 6)
+                    { // King's side castling
+                        Chessboard[0][5] = 'R';
+                        Chessboard[0][7] = ' ';
+                        specialMove = true;
+                    }
+                    setEnPassantZero();
+                    
+                    specialMoves[CASTLE] = SetBit(specialMoves[CASTLE], 1, false);
+                    break;
+                case 'k':
+                    if (tarCol == 2)
+                    { // Queen's side castling
+                        Chessboard[7][3] = 'r';
+                        Chessboard[7][0] = ' ';
+                        specialMove = true;
+                    }
+                    else if (tarCol == 6)
+                    { // King's side castling
+                        Chessboard[7][5] = 'r';
+                        Chessboard[7][7] = ' ';
+                        specialMove = true;
+                    }
+                    setEnPassantZero();
+                    specialMoves[CASTLE] = SetBit(specialMoves[CASTLE], 6, false);
+                    break;
+                default:
+                    setEnPassantZero();
+                    if (tarRow == 0 || curRow == 0)
+                    {
+                        // Set white side castling to off depending on the square that is affected
+                        if (tarCol == 0 || curCol == 0) // Queen's side
+                            specialMoves[CASTLE] = SetBit(specialMoves[CASTLE], 0, false);
+
+                        else if (tarCol == 7 || curCol == 7) // King's side
+                            specialMoves[CASTLE] = SetBit(specialMoves[CASTLE], 3, false);
+                    }
+                    if (tarRow == 7 || curRow == 7)
+                    {
+                        // Set white side castling to off depending on the square that is affected
+                        if (tarCol == 0 || curCol == 0) // Queen's side
+                            specialMoves[CASTLE] = SetBit(specialMoves[CASTLE], 5, false);
+
+                        else if (tarCol == 7 || curCol == 7) // King's side
+                            specialMoves[CASTLE] = SetBit(specialMoves[CASTLE], 7, false);
+                    }
+                    break;
+            }
+            // Set the bits to en passant
+
+
+
+
             // Update the chessboard
             Chessboard[tarRow][tarCol] = Chessboard[curRow][curCol];
             Chessboard[curRow][curCol] = ' ';
         }
 
-
+        private void setEnPassantZero()
+        {
+            specialMoves[WENP] = 0;
+            specialMoves[BENP] = 0;
+        }
 
         public static char[] letters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
         private void MovePiece(int targetRow, int targetCol)
