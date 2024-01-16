@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace ChessGame
 {
@@ -17,9 +18,9 @@ namespace ChessGame
         byte[] specialMoves = new byte[3];
 
         // Respective positions in the special moves array
-        const int CASTLE = 0;
-        const int BENP = 1; // Black en-passant
-        const int WENP = 2; // White en-passant
+        private const int CASTLE = 0;
+        private const int BENP = 1; // Black en-passant
+        private const int WENP = 2; // White en-passant
         // If white piece has moved forward with 2 moves, it assigns to its color the en-passant
 
 
@@ -82,41 +83,35 @@ namespace ChessGame
         char curPiece;
         int row;
         int col;
-        public void generateLegalMoves()
+        public void generateLegalMoves(string location)
         {
             LegalMoves.Clear();
-            // Go through every square of the chessboard
-            for (row = 0; row < 8; row++)
-            {
-                for (col = 0; col < 8; col++)
-                {
-                    curPiece = Chessboard[row][col];
-                    if (curPiece == ' ' || !char.IsUpper(curPiece) == turn) continue;
-                    switch (char.ToUpper(curPiece))
-                    {
-                        case 'P':
-                            generateMovesPawn();
-                            break;
-                        case 'N':
-                            generateMovesKnight();
-                            break;
-                        case 'R':
-                            generateMovesRook();
-                            break;
-                        case 'B':
-                            generateMovesBishop();
-                            break;
-                        case 'Q':
-                            // The queen has the same moves as a Rook and a Bishop combined
-                            generateMovesBishop();
-                            generateMovesRook();
+            col = getNumberFromCol(location[0]);
+            row = (int)char.GetNumericValue(location[1]) - 1;
 
-                            break;
-                        case 'K':
-                            generateMovesKing();
-                            break;
-                    }
-                }
+            curPiece = Chessboard[row][col];
+            switch (char.ToUpper(curPiece))
+            {
+                case 'P':
+                    generateMovesPawn();
+                    break;
+                case 'N':
+                    generateMovesKnight();
+                    break;
+                case 'R':
+                    generateMovesRook();
+                    break;
+                case 'B':
+                    generateMovesBishop();
+                    break;
+                case 'Q':
+                    // The queen has the same moves as a Rook and a Bishop combined
+                    generateMovesBishop();
+                    generateMovesRook();
+                    break;
+                case 'K':
+                    generateMovesKing();
+                    break;
             }
         }
 
@@ -178,13 +173,13 @@ namespace ChessGame
 
                 if (rightSide < 8 && CheckBit(specialMoves[BENP], rightSide))
                 {
-                    string curMove = $"{letters[col]}{row + 1} {letters[rightSide]}{row + 2}";
+                    string curMove = $"{letters[col]}{row + 1}{letters[rightSide]}{row + 2}";
                     LegalMoves.Add(curMove);
                 }
 
                 if (leftSide >= 0 && CheckBit(specialMoves[BENP], leftSide))
                 {
-                    string curMove = $"{letters[col]}{row + 1} {letters[leftSide]}{row + 2}";
+                    string curMove = $"{letters[col]}{row + 1}{letters[leftSide]}{row + 2}";
                     LegalMoves.Add(curMove);
                 }
             }
@@ -192,13 +187,13 @@ namespace ChessGame
             {
                 if (rightSide < 8 && CheckBit(specialMoves[WENP], rightSide))
                 {
-                    string curMove = $"{letters[col]}{row + 1} {letters[rightSide]}{row}";
+                    string curMove = $"{letters[col]}{row + 1}{letters[rightSide]}{row}";
                     LegalMoves.Add(curMove);
                 }
 
                 if (leftSide >= 0 && CheckBit(specialMoves[WENP], leftSide))
                 {
-                    string curMove = $"{letters[col]}{row + 1} {letters[leftSide]}{row}";
+                    string curMove = $"{letters[col]}{row + 1}{letters[leftSide]}{row}";
                     LegalMoves.Add(curMove);
                 }
             }
@@ -317,7 +312,7 @@ namespace ChessGame
                     CheckBit(tempByte, 1) // King
                     )
                 {
-                    LegalMoves.Add("e1 g1");
+                    LegalMoves.Add("e1g1");
                 }
                 // Queen's side castling
                 else if ((Chessboard[0][1] == ' ' && Chessboard[0][1] == ' ' && Chessboard[0][1] == ' ') &&
@@ -325,7 +320,7 @@ namespace ChessGame
                     CheckBit(tempByte, 1)
                     )
                 {
-                    LegalMoves.Add("e1 c1");
+                    LegalMoves.Add("e1c1");
                 }
             }
             else
@@ -336,7 +331,7 @@ namespace ChessGame
                     CheckBit(tempByte, 6) // King
                     )
                 {
-                    LegalMoves.Add("e8 g8");
+                    LegalMoves.Add("e8g8");
                 }
                 // Queen's side castling
                 else if ((Chessboard[7][1] == ' ' && Chessboard[7][2] == ' ' && Chessboard[7][3] == ' ') &&
@@ -344,7 +339,7 @@ namespace ChessGame
                     CheckBit(tempByte, 6)
                     )
                 {
-                    LegalMoves.Add("e8 c8");
+                    LegalMoves.Add("e8c8");
                 }
             }
         }
@@ -363,6 +358,7 @@ namespace ChessGame
             }
             return curByte;
         }
+
         private bool CheckBit(byte value, int bitPosition)
         {
             // Creating a mask with only the bit at the specified position set to 1
@@ -370,6 +366,18 @@ namespace ChessGame
 
             // Performing bitwise AND operation to check if the bit is set
             return (value & mask) != 0;
+        }
+
+        private int GetFirstSetBit(byte value)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                if (CheckBit(value, i))
+                {
+                    return i;
+                }
+            }
+            return -1; // No set bit found
         }
 
         private bool diffColor(char capturedPiece)
@@ -404,15 +412,15 @@ namespace ChessGame
             // The first location e.g. b1 is the piece we selected to move
             // The second one is the target location
 
-            string[] sepMoves = move.Split(' ');
+            
 
             // Get the coordinates for the moves selected
-            int curCol = getNumberFromCol(sepMoves[0][0]);
-            int curRow = (int)char.GetNumericValue(sepMoves[0][1]) - 1;
+            int curCol = getNumberFromCol(move[0]);
+            int curRow = (int)char.GetNumericValue(move[1]) - 1;
 
 
-            int tarCol = getNumberFromCol(sepMoves[1][0]);
-            int tarRow = (int)char.GetNumericValue(sepMoves[1][1]) - 1;
+            int tarCol = getNumberFromCol(move[2]);
+            int tarRow = (int)char.GetNumericValue(move[3]) - 1;
 
             char tempPiece = Chessboard[curRow][curCol];
 
@@ -461,34 +469,40 @@ namespace ChessGame
                     specialMove = true;
                     break;
                 case 'K':
-                    if (tarCol == 2)
-                    { // Queen's side castling
-                        Chessboard[0][3] = 'R';
-                        Chessboard[0][0] = ' ';
-                        specialMove = true;
-                    }
-                    else if (tarCol == 6)
-                    { // King's side castling
-                        Chessboard[0][5] = 'R';
-                        Chessboard[0][7] = ' ';
-                        specialMove = true;
+                    if (curCol == 4)
+                    {
+                        if (tarCol == 2)
+                        { // Queen's side castling
+                            Chessboard[0][3] = 'R';
+                            Chessboard[0][0] = ' ';
+                            specialMove = true;
+                        }
+                        else if (tarCol == 6)
+                        { // King's side castling
+                            Chessboard[0][5] = 'R';
+                            Chessboard[0][7] = ' ';
+                            specialMove = true;
+                        }
                     }
                     setEnPassantZero();
                     // Disable castling from this side
                     specialMoves[CASTLE] = SetBit(specialMoves[CASTLE], 1, false);
                     break;
                 case 'k':
-                    if (tarCol == 2)
-                    { // Queen's side castling
-                        Chessboard[7][3] = 'r';
-                        Chessboard[7][0] = ' ';
-                        specialMove = true;
-                    }
-                    else if (tarCol == 6)
-                    { // King's side castling
-                        Chessboard[7][5] = 'r';
-                        Chessboard[7][7] = ' ';
-                        specialMove = true;
+                    if (curCol == 4)
+                    {
+                        if (tarCol == 2)
+                        { // Queen's side castling
+                            Chessboard[7][3] = 'r';
+                            Chessboard[7][0] = ' ';
+                            specialMove = true;
+                        }
+                        else if (tarCol == 6)
+                        { // King's side castling
+                            Chessboard[7][5] = 'r';
+                            Chessboard[7][7] = ' ';
+                            specialMove = true;
+                        }
                     }
                     setEnPassantZero();
                     // Disable castling from this side
@@ -522,13 +536,92 @@ namespace ChessGame
             Chessboard[curRow][curCol] = ' ';
         }
 
+        public string toFEN()
+        {
+            // Forsyth–Edwards Notation
+            string fen = string.Empty;
+
+            //--- Adding pieces
+            for (int row = 7; row >= 0; row--)
+            {
+                int count = 0;
+                for (int col = 0; col < 8; col++)
+                {
+                    char curPiece = Chessboard[row][col];
+                    if (curPiece != ' ')
+                    {
+                        if (count > 0)
+                        {
+                            fen += count.ToString();
+                            count = 0;
+                        }
+                        fen += curPiece;
+                    }
+                    else
+                    {
+                        count++;
+                    }
+                }
+                if (count > 0)
+                {
+                    fen += count.ToString();
+                }
+
+                if (row != 0)
+                {
+                    fen += '/';
+                }
+            }
+
+            char fTurn = turn ? 'w' : 'b';
+            fen += $" {fTurn} ";
+
+            //--- Adding Castle
+            byte castling = specialMoves[CASTLE];
+            if (CheckBit(castling, 1))
+            {
+                if (CheckBit(castling, 0)) // Queen side
+                    fen += 'Q';
+
+                if (CheckBit(castling, 2))
+                    fen += 'K';
+            }
+            if (CheckBit(castling, 6))
+            {
+                if (CheckBit(castling, 5))
+                    fen += 'q';
+                if (CheckBit(castling, 7))
+                    fen += 'k';
+            }
+
+            fen += " ";
+            if (specialMoves[BENP] != 0)
+            {
+                fen += letters[GetFirstSetBit(specialMoves[BENP])] + "5";
+            }
+            else if (specialMoves[WENP] != 0)
+            {
+                fen += letters[GetFirstSetBit(specialMoves[WENP])] + "4";
+            }
+            else
+            {
+                fen += "-";
+            }
+
+            // Add half move clock and full move number
+            fen += $" 0 1";
+
+            return fen;
+        }
+
+
         private void MovePiece(int targetRow, int targetCol)
         {   // This adds all the legal moves in an array
             char targetPiece = Chessboard[targetRow][targetCol];
 
-            // The reason we use this notation e.g. e2 e4 is so we can connect it with Stockfish in the future
+            // The reason we use this notation e.g. e2e4 is so we can connect it with Stockfish in the future
             //   which uses the same notation
-            string curMove = $"{letters[col]}{row + 1} {letters[targetCol]}{targetRow + 1}";
+            string curMove = $"{letters[col]}{row + 1}{letters[targetCol]}{targetRow + 1}";
             LegalMoves.Add(curMove);
         }
     }

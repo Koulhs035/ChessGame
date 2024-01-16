@@ -155,6 +155,12 @@
   <ItemGroup>
     <None Include="Resources\clock.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\resign.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Tools\stockfish.exe" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

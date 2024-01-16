@@ -40,6 +40,11 @@ namespace ChessGame
             chessboardUI.Show();
             Hide();
         }
+
+        private void playAiButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
 

@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
             this.gameSettingsPanel = new System.Windows.Forms.Panel();
+            this.playButton = new System.Windows.Forms.Button();
             this.min30Button = new System.Windows.Forms.Button();
             this.min15Button = new System.Windows.Forms.Button();
             this.min10Button = new System.Windows.Forms.Button();
@@ -49,7 +50,6 @@
             this.gameSettingsAccentPanel = new System.Windows.Forms.Panel();
             this.playAiButton = new System.Windows.Forms.Button();
             this.PlayLocalButton = new System.Windows.Forms.Button();
-            this.playButton = new System.Windows.Forms.Button();
             this.gameSettingsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -83,8 +83,26 @@
             this.gameSettingsPanel.TabIndex = 2;
             this.gameSettingsPanel.Visible = false;
             // 
+            // playButton
+            // 
+            this.playButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.playButton.BackgroundImage = global::ChessGame.Properties.Resources.smooth_gray_wooden_textured_background_vector;
+            this.playButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.playButton.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
+            this.playButton.FlatAppearance.BorderSize = 2;
+            this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.playButton.Font = new System.Drawing.Font("Ebrima", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.playButton.Location = new System.Drawing.Point(134, 233);
+            this.playButton.Name = "playButton";
+            this.playButton.Size = new System.Drawing.Size(117, 39);
+            this.playButton.TabIndex = 3;
+            this.playButton.Text = "Play";
+            this.playButton.UseVisualStyleBackColor = true;
+            this.playButton.Click += new System.EventHandler(this.playButton_Click);
+            // 
             // min30Button
             // 
+            this.min30Button.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.min30Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.min30Button.ForeColor = System.Drawing.Color.White;
             this.min30Button.Location = new System.Drawing.Point(299, 204);
@@ -98,9 +116,10 @@
             // 
             // min15Button
             // 
+            this.min15Button.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.min15Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.min15Button.ForeColor = System.Drawing.Color.White;
-            this.min15Button.Location = new System.Drawing.Point(154, 204);
+            this.min15Button.Location = new System.Drawing.Point(158, 204);
             this.min15Button.Name = "min15Button";
             this.min15Button.Size = new System.Drawing.Size(75, 23);
             this.min15Button.TabIndex = 23;
@@ -111,6 +130,7 @@
             // 
             // min10Button
             // 
+            this.min10Button.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.min10Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.min10Button.ForeColor = System.Drawing.Color.White;
             this.min10Button.Location = new System.Drawing.Point(17, 204);
@@ -124,6 +144,7 @@
             // 
             // min7Button
             // 
+            this.min7Button.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.min7Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.min7Button.ForeColor = System.Drawing.Color.White;
             this.min7Button.Location = new System.Drawing.Point(299, 154);
@@ -137,9 +158,10 @@
             // 
             // min5Button
             // 
+            this.min5Button.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.min5Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.min5Button.ForeColor = System.Drawing.Color.White;
-            this.min5Button.Location = new System.Drawing.Point(154, 154);
+            this.min5Button.Location = new System.Drawing.Point(158, 154);
             this.min5Button.Name = "min5Button";
             this.min5Button.Size = new System.Drawing.Size(75, 23);
             this.min5Button.TabIndex = 20;
@@ -150,6 +172,7 @@
             // 
             // min3Button
             // 
+            this.min3Button.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.min3Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.min3Button.ForeColor = System.Drawing.Color.White;
             this.min3Button.Location = new System.Drawing.Point(17, 154);
@@ -163,6 +186,7 @@
             // 
             // min2Button
             // 
+            this.min2Button.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.min2Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.min2Button.ForeColor = System.Drawing.Color.White;
             this.min2Button.Location = new System.Drawing.Point(299, 104);
@@ -176,9 +200,10 @@
             // 
             // min1Button
             // 
+            this.min1Button.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.min1Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.min1Button.ForeColor = System.Drawing.Color.White;
-            this.min1Button.Location = new System.Drawing.Point(154, 104);
+            this.min1Button.Location = new System.Drawing.Point(158, 104);
             this.min1Button.Name = "min1Button";
             this.min1Button.Size = new System.Drawing.Size(75, 23);
             this.min1Button.TabIndex = 17;
@@ -189,9 +214,10 @@
             // 
             // rapidLabel
             // 
+            this.rapidLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.rapidLabel.AutoSize = true;
             this.rapidLabel.Font = new System.Drawing.Font("Ebrima", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rapidLabel.Location = new System.Drawing.Point(162, 180);
+            this.rapidLabel.Location = new System.Drawing.Point(166, 180);
             this.rapidLabel.Name = "rapidLabel";
             this.rapidLabel.Size = new System.Drawing.Size(58, 21);
             this.rapidLabel.TabIndex = 16;
@@ -199,9 +225,10 @@
             // 
             // BlitzLabel
             // 
+            this.BlitzLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.BlitzLabel.AutoSize = true;
             this.BlitzLabel.Font = new System.Drawing.Font("Ebrima", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BlitzLabel.Location = new System.Drawing.Point(162, 130);
+            this.BlitzLabel.Location = new System.Drawing.Point(166, 130);
             this.BlitzLabel.Name = "BlitzLabel";
             this.BlitzLabel.Size = new System.Drawing.Size(48, 21);
             this.BlitzLabel.TabIndex = 12;
@@ -209,6 +236,7 @@
             // 
             // sec30Button
             // 
+            this.sec30Button.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.sec30Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.sec30Button.ForeColor = System.Drawing.Color.White;
             this.sec30Button.Location = new System.Drawing.Point(17, 104);
@@ -222,9 +250,10 @@
             // 
             // BulletLabel
             // 
+            this.BulletLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.BulletLabel.AutoSize = true;
             this.BulletLabel.Font = new System.Drawing.Font("Ebrima", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BulletLabel.Location = new System.Drawing.Point(162, 80);
+            this.BulletLabel.Location = new System.Drawing.Point(166, 80);
             this.BulletLabel.Name = "BulletLabel";
             this.BulletLabel.Size = new System.Drawing.Size(59, 21);
             this.BulletLabel.TabIndex = 8;
@@ -300,6 +329,7 @@
             this.playAiButton.TabIndex = 1;
             this.playAiButton.Text = "Play AI";
             this.playAiButton.UseVisualStyleBackColor = true;
+            this.playAiButton.Click += new System.EventHandler(this.playAiButton_Click);
             // 
             // PlayLocalButton
             // 
@@ -317,23 +347,6 @@
             this.PlayLocalButton.Text = "Play Local";
             this.PlayLocalButton.UseVisualStyleBackColor = true;
             this.PlayLocalButton.Click += new System.EventHandler(this.PlayLocalButton_Click);
-            // 
-            // playButton
-            // 
-            this.playButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.playButton.BackgroundImage = global::ChessGame.Properties.Resources.smooth_gray_wooden_textured_background_vector;
-            this.playButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.playButton.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
-            this.playButton.FlatAppearance.BorderSize = 2;
-            this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.playButton.Font = new System.Drawing.Font("Ebrima", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.playButton.Location = new System.Drawing.Point(134, 233);
-            this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(117, 39);
-            this.playButton.TabIndex = 3;
-            this.playButton.Text = "Play";
-            this.playButton.UseVisualStyleBackColor = true;
-            this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // MainMenu
             // 

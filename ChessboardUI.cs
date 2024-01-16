@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Ignore Spelling: util
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -10,11 +12,12 @@ namespace ChessGame
         MainMenu mainMenu;
         int whiteTime;
         int blackTime;
+        Utility utility = new Utility();
         //---------------------------------------------Start Board---------------------------------------------//
-        public ChessboardUI(MainMenu menu, Utility utility)
+        public ChessboardUI(MainMenu menu, Utility util)
         {
             InitializeComponent();
-            InitializeBoard(); // Fixes the squares
+            utility = util;
 
             int time = utility.timeControl;
             whiteTime = time;
@@ -26,6 +29,13 @@ namespace ChessGame
             whiteSideTimerLabel.Text = Utility.FormatTime(time);
             blackSideTimerLabel.Text = Utility.FormatTime(time);
         }
+
+        private void ChessboardUI_Load(object sender, EventArgs e)
+        {
+            InitializeBoard(); // Fixes the squares
+            utility.StartStockfish();
+        }
+
         List<Panel> squareList = new List<Panel>();
         ChessBoard chessboard = new ChessBoard();
         private void InitializeBoard()
@@ -56,42 +66,37 @@ namespace ChessGame
         }
 
         //---------------------------------------------Movement---------------------------------------------//
-        string toMove = string.Empty;
+        string place1 = string.Empty;
+        char prevPiece;
         private void panel_MouseClick(object sender, EventArgs e)
-        {   // This is where moves happen
-            chessboard.generateLegalMoves();
-            Panel curPanel = sender as Panel;
+        {
            
+            Panel curPanel = sender as Panel;
+
             string location = curPanel.Tag.ToString();
 
             int row = (int)Char.GetNumericValue(location[1]);
             int col = ChessBoard.getNumberFromCol(location[0]);
-            
-            string moveExecuted;
-            if (toMove == string.Empty)
+
+            char curPiece = chessboard.Chessboard[row - 1][col];
+            if (place1 == string.Empty && curPiece != ' ' && Char.IsUpper(curPiece) == chessboard.turn)
             {
-                toMove = location;
+                place1 = location;
             }
-            else
+            else if (place1 != string.Empty) 
             {
-                moveExecuted = $"{toMove} {location}";
-
-                if (chessboard.LegalMoves.Contains(moveExecuted))
-                {
-                    EnableTimerIfNotEnabled();
-                    chessboard.ExecuteMove(moveExecuted);
-                    updateChessboardVisual(moveExecuted);
-                    chessboard.turn = !chessboard.turn;
-
-                    if (chessboard.specialMove) updateSpecialMoveVisuals();
-                    fixTimerColors();
-
-                    //TODO: Add sound effects
+                string executeMove = place1 + location;
+                chessboard.generateLegalMoves(place1);
+                if (chessboard.LegalMoves.Contains(executeMove))
+                {   // Here the move is executed
+                    chessboard.ExecuteMove(executeMove);
+                    MoveUpdates(executeMove);
                 }
-                testLabel.Text = $"{toMove}\n{moveExecuted}";
-                toMove = string.Empty;
+                place1 = string.Empty;
             }
         }
+
+
 
         //---------------------------------------------Tools---------------------------------------------//
         private void EnableTimerIfNotEnabled()
@@ -150,13 +155,13 @@ namespace ChessGame
             string[] sepMoves = move.Split(' ');
 
             // Get the coordinates for the moves selected
-            int curCol = ChessBoard.getNumberFromCol(sepMoves[0][0]); ;
-            int curRow = int.Parse(sepMoves[0][1].ToString()) - 1;
+            int curCol = ChessBoard.getNumberFromCol(move[0]); ;
+            int curRow = int.Parse(move[1].ToString()) - 1;
             int curIndex = 7 - curRow + 8 * curCol;
 
 
-            int tarCol = ChessBoard.getNumberFromCol(sepMoves[1][0]);
-            int tarRow = int.Parse(sepMoves[1][1].ToString()) - 1;
+            int tarCol = ChessBoard.getNumberFromCol(move[2]);
+            int tarRow = int.Parse(move[3].ToString()) - 1;
             int tarIndex = 7 - tarRow + 8 * tarCol;
 
             // Fix the icons accordingly 
@@ -220,6 +225,23 @@ namespace ChessGame
         private void backButton_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void MoveUpdates(string executeMove)
+        {
+            // UI Updates
+            updateChessboardVisual(executeMove);
+            if (chessboard.specialMove) updateSpecialMoveVisuals();
+            chessboard.turn = !chessboard.turn;
+
+            // Timer handling
+            EnableTimerIfNotEnabled();
+            fixTimerColors();
+        }
+
+        private void p1ResignButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

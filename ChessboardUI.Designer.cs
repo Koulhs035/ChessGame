@@ -54,10 +54,18 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.User1Label = new System.Windows.Forms.Label();
             this.User2Label = new System.Windows.Forms.Label();
-            this.ChessboardSquaresPanel = new System.Windows.Forms.Panel();
             this.testLabel = new System.Windows.Forms.Label();
             this.leftSettingsPanel = new System.Windows.Forms.Panel();
             this.backButton = new System.Windows.Forms.Button();
+            this.settingsAccentPanel = new System.Windows.Forms.Panel();
+            this.ChessboardSquaresPanel = new System.Windows.Forms.Panel();
+            this.gameOverPanel = new System.Windows.Forms.Panel();
+            this.playAgainButton = new System.Windows.Forms.Button();
+            this.backToMenu = new System.Windows.Forms.Button();
+            this.playerWonLabel = new System.Windows.Forms.Label();
+            this.gameSettingsAccentPanel = new System.Windows.Forms.Panel();
+            this.p1ResignButton = new System.Windows.Forms.Button();
+            this.p2ResignButton = new System.Windows.Forms.Button();
             label13 = new System.Windows.Forms.Label();
             label14 = new System.Windows.Forms.Label();
             label15 = new System.Windows.Forms.Label();
@@ -77,8 +85,9 @@
             this.timerPanel.SuspendLayout();
             this.blackSideTimerPanel.SuspendLayout();
             this.whiteSideTimerPanel.SuspendLayout();
-            this.ChessboardSquaresPanel.SuspendLayout();
             this.leftSettingsPanel.SuspendLayout();
+            this.ChessboardSquaresPanel.SuspendLayout();
+            this.gameOverPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // label13
@@ -143,7 +152,7 @@
             label12.ForeColor = System.Drawing.Color.White;
             label12.Location = new System.Drawing.Point(207, 580);
             label12.Name = "label12";
-            label12.Size = new System.Drawing.Size(13, 13);
+            label12.Size = new System.Drawing.Size(12, 13);
             label12.TabIndex = 10;
             label12.Text = "c";
             // 
@@ -279,7 +288,7 @@
             // 
             // blackSideTimerLabel
             // 
-            this.blackSideTimerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.blackSideTimerLabel.Font = new System.Drawing.Font("Ebrima", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.blackSideTimerLabel.ForeColor = System.Drawing.Color.White;
             this.blackSideTimerLabel.Location = new System.Drawing.Point(0, 40);
             this.blackSideTimerLabel.Name = "blackSideTimerLabel";
@@ -300,7 +309,7 @@
             // 
             // whiteSideTimerLabel
             // 
-            this.whiteSideTimerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.whiteSideTimerLabel.Font = new System.Drawing.Font("Ebrima", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.whiteSideTimerLabel.Location = new System.Drawing.Point(0, 36);
             this.whiteSideTimerLabel.Name = "whiteSideTimerLabel";
             this.whiteSideTimerLabel.Size = new System.Drawing.Size(66, 25);
@@ -317,11 +326,11 @@
             // 
             this.User1Label.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.User1Label.AutoSize = true;
-            this.User1Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.User1Label.Font = new System.Drawing.Font("Ebrima", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.User1Label.ForeColor = System.Drawing.Color.White;
             this.User1Label.Location = new System.Drawing.Point(421, 655);
             this.User1Label.Name = "User1Label";
-            this.User1Label.Size = new System.Drawing.Size(114, 33);
+            this.User1Label.Size = new System.Drawing.Size(110, 40);
             this.User1Label.TabIndex = 2;
             this.User1Label.Text = "Player1";
             // 
@@ -329,13 +338,59 @@
             // 
             this.User2Label.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.User2Label.AutoSize = true;
-            this.User2Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.User2Label.Font = new System.Drawing.Font("Ebrima", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.User2Label.ForeColor = System.Drawing.Color.White;
-            this.User2Label.Location = new System.Drawing.Point(421, 16);
+            this.User2Label.Location = new System.Drawing.Point(420, 9);
             this.User2Label.Name = "User2Label";
-            this.User2Label.Size = new System.Drawing.Size(114, 33);
+            this.User2Label.Size = new System.Drawing.Size(110, 40);
             this.User2Label.TabIndex = 3;
             this.User2Label.Text = "Player2";
+            // 
+            // testLabel
+            // 
+            this.testLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.testLabel.AutoSize = true;
+            this.testLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.testLabel.ForeColor = System.Drawing.SystemColors.Control;
+            this.testLabel.Location = new System.Drawing.Point(536, 16);
+            this.testLabel.Name = "testLabel";
+            this.testLabel.Size = new System.Drawing.Size(109, 33);
+            this.testLabel.TabIndex = 4;
+            this.testLabel.Text = "label17";
+            // 
+            // leftSettingsPanel
+            // 
+            this.leftSettingsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.leftSettingsPanel.Controls.Add(this.backButton);
+            this.leftSettingsPanel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.leftSettingsPanel.Location = new System.Drawing.Point(0, 0);
+            this.leftSettingsPanel.Name = "leftSettingsPanel";
+            this.leftSettingsPanel.Size = new System.Drawing.Size(59, 701);
+            this.leftSettingsPanel.TabIndex = 5;
+            // 
+            // backButton
+            // 
+            this.backButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.backButton.BackColor = System.Drawing.Color.Transparent;
+            this.backButton.BackgroundImage = global::ChessGame.Properties.Resources.backButton;
+            this.backButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.backButton.FlatAppearance.BorderSize = 0;
+            this.backButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.backButton.Location = new System.Drawing.Point(7, 665);
+            this.backButton.Name = "backButton";
+            this.backButton.Size = new System.Drawing.Size(41, 23);
+            this.backButton.TabIndex = 0;
+            this.backButton.UseVisualStyleBackColor = false;
+            this.backButton.Click += new System.EventHandler(this.backButton_Click);
+            // 
+            // settingsAccentPanel
+            // 
+            this.settingsAccentPanel.BackColor = System.Drawing.Color.Navy;
+            this.settingsAccentPanel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.settingsAccentPanel.Location = new System.Drawing.Point(59, 0);
+            this.settingsAccentPanel.Name = "settingsAccentPanel";
+            this.settingsAccentPanel.Size = new System.Drawing.Size(2, 701);
+            this.settingsAccentPanel.TabIndex = 6;
             // 
             // ChessboardSquaresPanel
             // 
@@ -344,6 +399,7 @@
             this.ChessboardSquaresPanel.BackgroundImage = global::ChessGame.Properties.Resources.woodChessboard;
             this.ChessboardSquaresPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ChessboardSquaresPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ChessboardSquaresPanel.Controls.Add(this.gameOverPanel);
             this.ChessboardSquaresPanel.Controls.Add(label13);
             this.ChessboardSquaresPanel.Controls.Add(label14);
             this.ChessboardSquaresPanel.Controls.Add(label15);
@@ -366,42 +422,98 @@
             this.ChessboardSquaresPanel.TabIndex = 0;
             this.ChessboardSquaresPanel.TabStop = true;
             // 
-            // testLabel
+            // gameOverPanel
             // 
-            this.testLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.testLabel.AutoSize = true;
-            this.testLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.testLabel.ForeColor = System.Drawing.SystemColors.Control;
-            this.testLabel.Location = new System.Drawing.Point(283, 319);
-            this.testLabel.Name = "testLabel";
-            this.testLabel.Size = new System.Drawing.Size(109, 33);
-            this.testLabel.TabIndex = 4;
-            this.testLabel.Text = "label17";
+            this.gameOverPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.gameOverPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.gameOverPanel.Controls.Add(this.playAgainButton);
+            this.gameOverPanel.Controls.Add(this.backToMenu);
+            this.gameOverPanel.Controls.Add(this.playerWonLabel);
+            this.gameOverPanel.Controls.Add(this.gameSettingsAccentPanel);
+            this.gameOverPanel.Location = new System.Drawing.Point(152, 202);
+            this.gameOverPanel.Name = "gameOverPanel";
+            this.gameOverPanel.Size = new System.Drawing.Size(296, 158);
+            this.gameOverPanel.TabIndex = 16;
+            this.gameOverPanel.Visible = false;
             // 
-            // leftSettingsPanel
+            // playAgainButton
             // 
-            this.leftSettingsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.leftSettingsPanel.Controls.Add(this.backButton);
-            this.leftSettingsPanel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.leftSettingsPanel.Location = new System.Drawing.Point(0, 0);
-            this.leftSettingsPanel.Name = "leftSettingsPanel";
-            this.leftSettingsPanel.Size = new System.Drawing.Size(69, 701);
-            this.leftSettingsPanel.TabIndex = 5;
+            this.playAgainButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.playAgainButton.BackgroundImage = global::ChessGame.Properties.Resources.smooth_gray_wooden_textured_background_vector;
+            this.playAgainButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.playAgainButton.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
+            this.playAgainButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.playAgainButton.Font = new System.Drawing.Font("Ebrima", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.playAgainButton.Location = new System.Drawing.Point(151, 79);
+            this.playAgainButton.Name = "playAgainButton";
+            this.playAgainButton.Size = new System.Drawing.Size(136, 39);
+            this.playAgainButton.TabIndex = 7;
+            this.playAgainButton.Text = "Play";
+            this.playAgainButton.UseVisualStyleBackColor = true;
             // 
-            // backButton
+            // backToMenu
             // 
-            this.backButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.backButton.BackColor = System.Drawing.Color.Transparent;
-            this.backButton.BackgroundImage = global::ChessGame.Properties.Resources.backButton;
-            this.backButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.backButton.FlatAppearance.BorderSize = 0;
-            this.backButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.backButton.Location = new System.Drawing.Point(12, 665);
-            this.backButton.Name = "backButton";
-            this.backButton.Size = new System.Drawing.Size(41, 23);
-            this.backButton.TabIndex = 0;
-            this.backButton.UseVisualStyleBackColor = false;
-            this.backButton.Click += new System.EventHandler(this.backButton_Click);
+            this.backToMenu.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.backToMenu.BackgroundImage = global::ChessGame.Properties.Resources.smooth_gray_wooden_textured_background_vector;
+            this.backToMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.backToMenu.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
+            this.backToMenu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.backToMenu.Font = new System.Drawing.Font("Ebrima", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.backToMenu.Location = new System.Drawing.Point(9, 79);
+            this.backToMenu.Name = "backToMenu";
+            this.backToMenu.Size = new System.Drawing.Size(136, 39);
+            this.backToMenu.TabIndex = 6;
+            this.backToMenu.Text = "Menu";
+            this.backToMenu.UseVisualStyleBackColor = true;
+            this.backToMenu.Click += new System.EventHandler(this.backButton_Click);
+            // 
+            // playerWonLabel
+            // 
+            this.playerWonLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.playerWonLabel.Font = new System.Drawing.Font("Ebrima", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.playerWonLabel.ForeColor = System.Drawing.Color.White;
+            this.playerWonLabel.Location = new System.Drawing.Point(3, 16);
+            this.playerWonLabel.Name = "playerWonLabel";
+            this.playerWonLabel.Size = new System.Drawing.Size(288, 37);
+            this.playerWonLabel.TabIndex = 5;
+            this.playerWonLabel.Text = "Player 1 Won!";
+            this.playerWonLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gameSettingsAccentPanel
+            // 
+            this.gameSettingsAccentPanel.BackColor = System.Drawing.Color.Navy;
+            this.gameSettingsAccentPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gameSettingsAccentPanel.Location = new System.Drawing.Point(0, 0);
+            this.gameSettingsAccentPanel.Name = "gameSettingsAccentPanel";
+            this.gameSettingsAccentPanel.Size = new System.Drawing.Size(296, 5);
+            this.gameSettingsAccentPanel.TabIndex = 4;
+            // 
+            // p1ResignButton
+            // 
+            this.p1ResignButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.p1ResignButton.BackgroundImage = global::ChessGame.Properties.Resources.resign;
+            this.p1ResignButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.p1ResignButton.FlatAppearance.BorderSize = 0;
+            this.p1ResignButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.p1ResignButton.Location = new System.Drawing.Point(1025, 455);
+            this.p1ResignButton.Name = "p1ResignButton";
+            this.p1ResignButton.Size = new System.Drawing.Size(25, 23);
+            this.p1ResignButton.TabIndex = 7;
+            this.p1ResignButton.UseVisualStyleBackColor = true;
+            this.p1ResignButton.Click += new System.EventHandler(this.p1ResignButton_Click);
+            // 
+            // p2ResignButton
+            // 
+            this.p2ResignButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.p2ResignButton.BackgroundImage = global::ChessGame.Properties.Resources.resign;
+            this.p2ResignButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.p2ResignButton.FlatAppearance.BorderSize = 0;
+            this.p2ResignButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.p2ResignButton.Location = new System.Drawing.Point(1025, 226);
+            this.p2ResignButton.Name = "p2ResignButton";
+            this.p2ResignButton.Size = new System.Drawing.Size(20, 23);
+            this.p2ResignButton.TabIndex = 8;
+            this.p2ResignButton.UseVisualStyleBackColor = true;
             // 
             // ChessboardUI
             // 
@@ -409,24 +521,30 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(1439, 701);
+            this.Controls.Add(this.p2ResignButton);
+            this.Controls.Add(this.p1ResignButton);
+            this.Controls.Add(this.settingsAccentPanel);
             this.Controls.Add(this.leftSettingsPanel);
             this.Controls.Add(this.testLabel);
             this.Controls.Add(this.User2Label);
             this.Controls.Add(this.User1Label);
             this.Controls.Add(this.timerPanel);
             this.Controls.Add(this.ChessboardSquaresPanel);
+            this.Font = new System.Drawing.Font("Ebrima", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ChessboardUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ChessboardUI";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ChessboardUI_FormClosed);
+            this.Load += new System.EventHandler(this.ChessboardUI_Load);
             this.timerPanel.ResumeLayout(false);
             this.blackSideTimerPanel.ResumeLayout(false);
             this.whiteSideTimerPanel.ResumeLayout(false);
+            this.leftSettingsPanel.ResumeLayout(false);
             this.ChessboardSquaresPanel.ResumeLayout(false);
             this.ChessboardSquaresPanel.PerformLayout();
-            this.leftSettingsPanel.ResumeLayout(false);
+            this.gameOverPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -445,5 +563,13 @@
         private System.Windows.Forms.Label testLabel;
         private System.Windows.Forms.Panel leftSettingsPanel;
         private System.Windows.Forms.Button backButton;
+        private System.Windows.Forms.Panel gameOverPanel;
+        private System.Windows.Forms.Panel gameSettingsAccentPanel;
+        private System.Windows.Forms.Panel settingsAccentPanel;
+        private System.Windows.Forms.Label playerWonLabel;
+        private System.Windows.Forms.Button playAgainButton;
+        private System.Windows.Forms.Button backToMenu;
+        private System.Windows.Forms.Button p1ResignButton;
+        private System.Windows.Forms.Button p2ResignButton;
     }
 }

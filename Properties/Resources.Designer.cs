@@ -163,6 +163,16 @@ namespace ChessGame.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap resign {
+            get {
+                object obj = ResourceManager.GetObject("resign", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap smooth_gray_wooden_textured_background_vector {
             get {
                 object obj = ResourceManager.GetObject("smooth-gray-wooden-textured-background-vector", resourceCulture);
