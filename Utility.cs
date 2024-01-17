@@ -136,14 +136,14 @@ namespace ChessGame
             }
         }
 
-        public void AddToDatabase(string connectionString)
+        public void AddToDatabase()
         {
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            using (SQLiteConnection connection = new SQLiteConnection(connString))
             {
                 try
                 {
                     connection.Open();
-                    string insertSQL = "INSERT INTO Recipes (player1,player2, time, score, positions, date) " +
+                    string insertSQL = "INSERT INTO Games (player1,player2, time, score, positions, date) " +
                                     "VALUES (@player1, @player2, @time, @score, @positions, @date)";
 
                     using (SQLiteCommand command = new SQLiteCommand(insertSQL, connection))

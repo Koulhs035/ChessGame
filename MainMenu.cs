@@ -15,30 +15,29 @@ namespace ChessGame
         {
             gameSettingsPanel.Visible = true;
         }
-    
+
         private void getTag(object sender, EventArgs e)
         {
             Button button = sender as Button;
             string tag = button.Tag as string;
             utility.timeControl = int.Parse(tag);
         }
-
-        private void player1TextBox_TextChanged(object sender, EventArgs e)
-        {
-            utility.pNames[0] = player1TextBox.Text;
-        }
-
-        private void player2TextBox_TextChanged(object sender, EventArgs e)
-        {
-            utility.pNames[1] = player2TextBox.Text;
-        }
-
+        
         private void playButton_Click(object sender, EventArgs e)
         {
-            utility.engineToPlay = false;
-            ChessboardUI chessboardUI = new ChessboardUI(this, utility);
-            chessboardUI.Show();
-            Hide();
+            if (player1TextBox.Text != player2TextBox.Text)
+            {
+                utility.engineToPlay = false;
+                ChessboardUI chessboardUI = new ChessboardUI(this, utility);
+                chessboardUI.Show();
+                utility.pNames[0] = player1TextBox.Text;
+                utility.pNames[1] = player2TextBox.Text;
+                Hide();
+            }
+            else
+            {
+                MessageBox.Show("You can't have the same player names!");
+            }
         }
 
         private void playAiButton_Click(object sender, EventArgs e)
@@ -50,5 +49,6 @@ namespace ChessGame
             Hide();
 
         }
+
     }
 }

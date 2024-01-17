@@ -207,6 +207,8 @@
     <None Include="Resources\bMove.wav" />
     <None Include="Resources\wMove.wav" />
     <None Include="Resources\startGameSFX.wav" />
+    <None Include="Resources\bgPieces.png" />
+    <None Include="Resources\bgPieces2.png" />
     <Content Include="Tools\stockfish.exe" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

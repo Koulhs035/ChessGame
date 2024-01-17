@@ -131,6 +131,10 @@ namespace ChessGame
             timer1.Stop();
             playSFX("gameEnd");
             utility.StopStockfish();
+
+            utility.score = player == User1Label.Text ? "1-0" : "0-1";
+            utility.AddToDatabase();
+
         }
 
 
@@ -220,6 +224,7 @@ namespace ChessGame
             EnableTimerIfNotEnabled();
             fixTimerColors();
         }
+
         //---Timer
         private void timer1_Tick(object sender, EventArgs e)
         {

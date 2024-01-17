@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
             this.gameSettingsPanel = new System.Windows.Forms.Panel();
-            this.playButton = new System.Windows.Forms.Button();
             this.min30Button = new System.Windows.Forms.Button();
             this.min15Button = new System.Windows.Forms.Button();
             this.min10Button = new System.Windows.Forms.Button();
@@ -48,9 +47,15 @@
             this.player1TextBox = new System.Windows.Forms.TextBox();
             this.player1Label = new System.Windows.Forms.Label();
             this.gameSettingsAccentPanel = new System.Windows.Forms.Panel();
+            this.playButton = new System.Windows.Forms.Button();
             this.playAiButton = new System.Windows.Forms.Button();
             this.PlayLocalButton = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.gameSettingsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // gameSettingsPanel
@@ -77,28 +82,11 @@
             this.gameSettingsPanel.Controls.Add(this.player1Label);
             this.gameSettingsPanel.Controls.Add(this.gameSettingsAccentPanel);
             this.gameSettingsPanel.ForeColor = System.Drawing.Color.White;
-            this.gameSettingsPanel.Location = new System.Drawing.Point(329, 210);
+            this.gameSettingsPanel.Location = new System.Drawing.Point(486, 324);
             this.gameSettingsPanel.Name = "gameSettingsPanel";
             this.gameSettingsPanel.Size = new System.Drawing.Size(388, 686);
             this.gameSettingsPanel.TabIndex = 2;
             this.gameSettingsPanel.Visible = false;
-            // 
-            // playButton
-            // 
-            this.playButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.playButton.BackgroundImage = global::ChessGame.Properties.Resources.smooth_gray_wooden_textured_background_vector;
-            this.playButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.playButton.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
-            this.playButton.FlatAppearance.BorderSize = 2;
-            this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.playButton.Font = new System.Drawing.Font("Ebrima", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.playButton.Location = new System.Drawing.Point(134, 233);
-            this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(117, 39);
-            this.playButton.TabIndex = 3;
-            this.playButton.Text = "Play";
-            this.playButton.UseVisualStyleBackColor = true;
-            this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // min30Button
             // 
@@ -268,7 +256,6 @@
             this.player2TextBox.Name = "player2TextBox";
             this.player2TextBox.Size = new System.Drawing.Size(127, 22);
             this.player2TextBox.TabIndex = 7;
-            this.player2TextBox.TextChanged += new System.EventHandler(this.player2TextBox_TextChanged);
             // 
             // player2Label
             // 
@@ -291,7 +278,6 @@
             this.player1TextBox.Name = "player1TextBox";
             this.player1TextBox.Size = new System.Drawing.Size(127, 22);
             this.player1TextBox.TabIndex = 5;
-            this.player1TextBox.TextChanged += new System.EventHandler(this.player1TextBox_TextChanged);
             // 
             // player1Label
             // 
@@ -307,23 +293,41 @@
             // 
             // gameSettingsAccentPanel
             // 
-            this.gameSettingsAccentPanel.BackColor = System.Drawing.Color.Navy;
+            this.gameSettingsAccentPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.gameSettingsAccentPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.gameSettingsAccentPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.gameSettingsAccentPanel.Location = new System.Drawing.Point(0, 0);
             this.gameSettingsAccentPanel.Name = "gameSettingsAccentPanel";
             this.gameSettingsAccentPanel.Size = new System.Drawing.Size(388, 5);
             this.gameSettingsAccentPanel.TabIndex = 3;
             // 
+            // playButton
+            // 
+            this.playButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.playButton.BackgroundImage = global::ChessGame.Properties.Resources.smooth_gray_wooden_textured_background_vector;
+            this.playButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.playButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.playButton.FlatAppearance.BorderSize = 3;
+            this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.playButton.Font = new System.Drawing.Font("Ebrima", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.playButton.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.playButton.Location = new System.Drawing.Point(134, 233);
+            this.playButton.Name = "playButton";
+            this.playButton.Size = new System.Drawing.Size(117, 39);
+            this.playButton.TabIndex = 3;
+            this.playButton.Text = "Play";
+            this.playButton.UseVisualStyleBackColor = true;
+            this.playButton.Click += new System.EventHandler(this.playButton_Click);
+            // 
             // playAiButton
             // 
             this.playAiButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.playAiButton.BackgroundImage = global::ChessGame.Properties.Resources.smooth_gray_wooden_textured_background_vector;
             this.playAiButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.playAiButton.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
-            this.playAiButton.FlatAppearance.BorderSize = 2;
+            this.playAiButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.playAiButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.playAiButton.Font = new System.Drawing.Font("Ebrima", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.playAiButton.Location = new System.Drawing.Point(414, 128);
+            this.playAiButton.Location = new System.Drawing.Point(571, 242);
             this.playAiButton.Name = "playAiButton";
             this.playAiButton.Size = new System.Drawing.Size(226, 57);
             this.playAiButton.TabIndex = 1;
@@ -334,30 +338,70 @@
             // PlayLocalButton
             // 
             this.PlayLocalButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.PlayLocalButton.BackColor = System.Drawing.Color.White;
             this.PlayLocalButton.BackgroundImage = global::ChessGame.Properties.Resources.smooth_gray_wooden_textured_background_vector;
             this.PlayLocalButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.PlayLocalButton.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
-            this.PlayLocalButton.FlatAppearance.BorderSize = 2;
+            this.PlayLocalButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.PlayLocalButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.PlayLocalButton.Font = new System.Drawing.Font("Ebrima", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PlayLocalButton.Location = new System.Drawing.Point(414, 46);
+            this.PlayLocalButton.Location = new System.Drawing.Point(571, 160);
             this.PlayLocalButton.Name = "PlayLocalButton";
             this.PlayLocalButton.Size = new System.Drawing.Size(226, 57);
             this.PlayLocalButton.TabIndex = 0;
-            this.PlayLocalButton.Text = "Play Local";
-            this.PlayLocalButton.UseVisualStyleBackColor = true;
+            this.PlayLocalButton.Text = "Play Versus";
+            this.PlayLocalButton.UseVisualStyleBackColor = false;
             this.PlayLocalButton.Click += new System.EventHandler(this.PlayLocalButton_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.BackgroundImage = global::ChessGame.Properties.Resources.bgPieces;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(-5, 388);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(459, 337);
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox2.BackgroundImage = global::ChessGame.Properties.Resources.bgPieces2;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox2.Location = new System.Drawing.Point(912, 0);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(454, 238);
+            this.pictureBox2.TabIndex = 11;
+            this.pictureBox2.TabStop = false;
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.AutoSize = true;
+            this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Location = new System.Drawing.Point(460, -17);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(446, 742);
+            this.panel1.TabIndex = 12;
             // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(1045, 495);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.ClientSize = new System.Drawing.Size(1359, 722);
             this.Controls.Add(this.gameSettingsPanel);
             this.Controls.Add(this.playAiButton);
             this.Controls.Add(this.PlayLocalButton);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Ebrima", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -367,6 +411,8 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.gameSettingsPanel.ResumeLayout(false);
             this.gameSettingsPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -395,6 +441,9 @@
         private System.Windows.Forms.Button min2Button;
         private System.Windows.Forms.Button min1Button;
         private System.Windows.Forms.Button playButton;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
