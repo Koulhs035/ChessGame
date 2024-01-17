@@ -15,7 +15,6 @@ namespace ChessGame
         {
             gameSettingsPanel.Visible = true;
         }
-
     
         private void getTag(object sender, EventArgs e)
         {
@@ -36,6 +35,7 @@ namespace ChessGame
 
         private void playButton_Click(object sender, EventArgs e)
         {
+            utility.engineToPlay = false;
             ChessboardUI chessboardUI = new ChessboardUI(this, utility);
             chessboardUI.Show();
             Hide();
@@ -43,10 +43,11 @@ namespace ChessGame
 
         private void playAiButton_Click(object sender, EventArgs e)
         {
+            utility.engineToPlay = true;
+            gameSettingsPanel.Visible = false;
+            ChessboardUI chessboardUI = new ChessboardUI(this, utility);
+            chessboardUI.Show();
 
         }
     }
-
-
-
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 
 namespace ChessGame
 {
@@ -403,16 +402,15 @@ namespace ChessGame
             return 10;
         }
 
-        public bool specialMove;
-
         public static char[] letters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
         //---------------------------------------------Move Execution & Notation---------------------------------------------//
+        public bool specialMove; 
+        public string movesDone;
         public void ExecuteMove(string move)
         {
             // The first location e.g. b1 is the piece we selected to move
             // The second one is the target location
 
-            
 
             // Get the coordinates for the moves selected
             int curCol = getNumberFromCol(move[0]);
@@ -429,7 +427,6 @@ namespace ChessGame
             int leftSide = curCol - 1;
             switch (tempPiece)
             {
-
                 case 'P':
                     // Twice forward check
                     if (tarRow == 3 && curRow == 1)
@@ -534,11 +531,12 @@ namespace ChessGame
             // Update the chessboard
             Chessboard[tarRow][tarCol] = Chessboard[curRow][curCol];
             Chessboard[curRow][curCol] = ' ';
+
+            movesDone += toFEN() + '\n'; // This will be used to store the game progression in our database
         }
 
         public string toFEN()
-        {
-            // Forsyth–Edwards Notation
+        {   // Forsyth–Edwards Notation
             string fen = string.Empty;
 
             //--- Adding pieces
@@ -563,14 +561,11 @@ namespace ChessGame
                     }
                 }
                 if (count > 0)
-                {
                     fen += count.ToString();
-                }
 
                 if (row != 0)
-                {
                     fen += '/';
-                }
+
             }
 
             char fTurn = turn ? 'w' : 'b';
@@ -580,21 +575,22 @@ namespace ChessGame
             byte castling = specialMoves[CASTLE];
             if (CheckBit(castling, 1))
             {
-                if (CheckBit(castling, 0)) // Queen side
+                if (CheckBit(castling, 0)) // Queen's side
                     fen += 'Q';
 
-                if (CheckBit(castling, 2))
+                if (CheckBit(castling, 2)) // King's side
                     fen += 'K';
             }
             if (CheckBit(castling, 6))
             {
-                if (CheckBit(castling, 5))
+                if (CheckBit(castling, 5)) // Queen's side
                     fen += 'q';
-                if (CheckBit(castling, 7))
+                if (CheckBit(castling, 7)) // King's side
                     fen += 'k';
             }
-
             fen += " ";
+
+            // Add possible en passant to our FEN
             if (specialMoves[BENP] != 0)
             {
                 fen += letters[GetFirstSetBit(specialMoves[BENP])] + "5";
@@ -613,7 +609,6 @@ namespace ChessGame
 
             return fen;
         }
-
 
         private void MovePiece(int targetRow, int targetCol)
         {   // This adds all the legal moves in an array

@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ChessGame
@@ -91,14 +92,33 @@ namespace ChessGame
                 {   // Here the move is executed
                     chessboard.ExecuteMove(executeMove);
                     MoveUpdates(executeMove);
+                    stockfishToPlay();
                 }
                 place1 = string.Empty;
             }
         }
 
+        private void stockfishToPlay()
+        {
+            if (utility.engineToPlay)
+            {
+                string executeMove = utility.GetStockfishMove(chessboard.toFEN());
+                chessboard.ExecuteMove(executeMove);
+
+                // Wait for 200 milliseconds
+                // Task.Delay(1200).Wait();
+
+                MoveUpdates(executeMove);
+            }
+        }
 
 
         //---------------------------------------------Tools---------------------------------------------//
+        private void playerWon(string player)
+        {
+
+        }
+
         private void EnableTimerIfNotEnabled()
         {
             if (!timer1.Enabled)
@@ -205,7 +225,10 @@ namespace ChessGame
                 whiteTime -= 1;
                 whiteSideTimerLabel.Text = Utility.FormatTime(whiteTime);
                 if (whiteTime == 0)
+                {
                     timer1.Stop();
+                    playerWon(User2Label.Text);
+                }
             }
             else
             {
@@ -213,7 +236,10 @@ namespace ChessGame
                 blackTime -= 1;
                 blackSideTimerLabel.Text = Utility.FormatTime(blackTime);
                 if (blackTime == 0)
+                {
                     timer1.Stop();
+                    playerWon(User1Label.Text);
+                }
             }
         }
 

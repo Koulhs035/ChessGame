@@ -311,7 +311,7 @@
             this.gameSettingsAccentPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.gameSettingsAccentPanel.Location = new System.Drawing.Point(0, 0);
             this.gameSettingsAccentPanel.Name = "gameSettingsAccentPanel";
-            this.gameSettingsAccentPanel.Size = new System.Drawing.Size(388, 10);
+            this.gameSettingsAccentPanel.Size = new System.Drawing.Size(388, 5);
             this.gameSettingsAccentPanel.TabIndex = 3;
             // 
             // playAiButton

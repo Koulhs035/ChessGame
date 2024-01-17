@@ -1,8 +1,5 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace ChessGame
 {
@@ -11,8 +8,9 @@ namespace ChessGame
         public string connString;
         public string[] pNames = new string[2];
         public int timeControl = 600; // 10 minutes by default
+        public bool engineToPlay = false;
+        public int searchDepth = 20;
 
-       
 
         public static string FormatTime(int seconds)
         {
@@ -53,53 +51,53 @@ namespace ChessGame
         {
             // Set the position on the chessboard
             stockfishStreamWriter.WriteLine($"position fen {fen}");
+            //stockfishStreamWriter.WriteLine($"go depth {searchDepth}");
 
             // Instruct Stockfish to calculate the best move
             stockfishStreamWriter.WriteLine("go movetime 1000");
 
             // Wait for Stockfish to respond with the best move or game result
             string response = "Illegal";  // Default to "Illegal" in case of an exception
-            try
-            {
-                while (true)
-                {
-                    string line = stockfishStreamReader.ReadLine();
-                    if (line == null)
-                    {
-                        // Handle the case where the StreamReader returns null (end of stream)
-                        break;
-                    }
 
-                    if (line.StartsWith("bestmove"))
+            while (true)
+            {
+                string line = stockfishStreamReader.ReadLine();
+                if (line == null)
+                {
+                    // Handle the case where the StreamReader returns null (end of stream)
+                    break;
+                }
+
+                if (line.StartsWith("bestmove"))
+                {
+                    // Extract the best move information
+                    string[] parts = line.Split(' ');
+                    if (parts.Length >= 2)
                     {
-                        response = line;
-                        break;
+                        // The move is in the second part
+                        response = parts[1];
                     }
-                    else if (line.StartsWith("info"))
-                    {
-                        // Process evaluation information if needed
-                    }
-                    else if (line.StartsWith("mate"))
-                    {
-                        // Handle checkmate
-                        response = "Checkmate";
-                        break;
-                    }
-                    else if (line.StartsWith("score"))
-                    {
-                        // Process the current evaluation score if needed
-                    }
+                    break;
+                }
+                else if (line.StartsWith("info"))
+                {
+                    // Process evaluation information if needed
+                }
+                else if (line.StartsWith("mate"))
+                {
+                    // Handle checkmate
+                    response = "Checkmate";
+                    break;
+                }
+                else if (line.StartsWith("score"))
+                {
+                    // Process the current evaluation score if needed
                 }
             }
-            catch (Exception)
-            {
-                // Handle other exceptions if needed
-            }
+
 
             return response;
         }
-
-
 
         public void StopStockfish()
         {
