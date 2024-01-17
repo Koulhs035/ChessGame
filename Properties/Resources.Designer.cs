@@ -111,6 +111,15 @@ namespace ChessGame.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream bMove {
+            get {
+                return ResourceManager.GetStream("bMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap bPawn {
@@ -161,6 +170,15 @@ namespace ChessGame.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream gameEnd {
+            get {
+                return ResourceManager.GetStream("gameEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap resign {
@@ -177,6 +195,15 @@ namespace ChessGame.Properties {
             get {
                 object obj = ResourceManager.GetObject("smooth-gray-wooden-textured-background-vector", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream startGame {
+            get {
+                return ResourceManager.GetStream("startGame", resourceCulture);
             }
         }
         
@@ -207,6 +234,15 @@ namespace ChessGame.Properties {
             get {
                 object obj = ResourceManager.GetObject("wKnight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream wMove {
+            get {
+                return ResourceManager.GetStream("wMove", resourceCulture);
             }
         }
         

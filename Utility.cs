@@ -1,16 +1,24 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Data.SQLite;
+using System.Diagnostics;
 using System.IO;
-
+using System.Windows.Forms;
 namespace ChessGame
 {
     public class Utility
     {
-        public string connString;
+        // Game settings
+        public string connString = "Data Source=Database.db;Version=3;";
         public string[] pNames = new string[2];
         public int timeControl = 600; // 10 minutes by default
-        public bool engineToPlay = false;
-        public int searchDepth = 20;
 
+        // Stockfish settings
+        public bool engineToPlay = false;
+        public int searchDepth = 10;
+
+        // Database
+        public string movesDone = string.Empty;
+        public string score;
 
         public static string FormatTime(int seconds)
         {
@@ -51,10 +59,9 @@ namespace ChessGame
         {
             // Set the position on the chessboard
             stockfishStreamWriter.WriteLine($"position fen {fen}");
-            //stockfishStreamWriter.WriteLine($"go depth {searchDepth}");
 
             // Instruct Stockfish to calculate the best move
-            stockfishStreamWriter.WriteLine("go movetime 1000");
+            stockfishStreamWriter.WriteLine($"go depth {searchDepth}");
 
             // Wait for Stockfish to respond with the best move or game result
             string response = "Illegal";  // Default to "Illegal" in case of an exception
@@ -68,33 +75,31 @@ namespace ChessGame
                     break;
                 }
 
-                if (line.StartsWith("bestmove"))
+                try
                 {
-                    // Extract the best move information
-                    string[] parts = line.Split(' ');
-                    if (parts.Length >= 2)
+                    if (line.StartsWith("bestmove"))
                     {
-                        // The move is in the second part
-                        response = parts[1];
+                        // Extract the best move information
+                        string[] parts = line.Split(' ');
+                        if (parts.Length >= 2)
+                        {
+                            // The move is in the second part
+                            response = parts[1];
+                        }
+                        break;
                     }
-                    break;
+                    else if (line.StartsWith("mate"))
+                    {
+                        // Handle checkmate
+                        response = "Checkmate";
+                        break;
+                    }
                 }
-                else if (line.StartsWith("info"))
+                catch (System.Exception ex)
                 {
-                    // Process evaluation information if needed
-                }
-                else if (line.StartsWith("mate"))
-                {
-                    // Handle checkmate
-                    response = "Checkmate";
-                    break;
-                }
-                else if (line.StartsWith("score"))
-                {
-                    // Process the current evaluation score if needed
+                    MessageBox.Show("ERROR!\n" + ex.ToString());
                 }
             }
-
 
             return response;
         }
@@ -108,8 +113,61 @@ namespace ChessGame
             stockfishProcess.WaitForExit();
             stockfishProcess.Close();
         }
+        //---------------------------------------------Database---------------------------------------------//
+        public void InitializeTable()
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connString))
+            {
+                connection.Open();
+                string createTableSQL = "CREATE TABLE IF NOT EXISTS Games(" +
+                    "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "player1 TEXT," +
+                    "player2 TEXT," +
+                    "time INTEGER," +
+                    "score TEXT," +
+                    "positions TEXT," +
+                    "date DATETIME" +
+                    ")";
+
+                using (SQLiteCommand command = new SQLiteCommand(createTableSQL, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void AddToDatabase(string connectionString)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string insertSQL = "INSERT INTO Recipes (player1,player2, time, score, positions, date) " +
+                                    "VALUES (@player1, @player2, @time, @score, @positions, @date)";
+
+                    using (SQLiteCommand command = new SQLiteCommand(insertSQL, connection))
+                    {
+                        command.Parameters.AddWithValue("@player1", pNames[0]);
+                        command.Parameters.AddWithValue("@player2", pNames[1]);
+                        command.Parameters.AddWithValue("@time", timeControl);
+                        command.Parameters.AddWithValue("@score", score);
+                        command.Parameters.AddWithValue("@positions", movesDone);
+                        command.Parameters.AddWithValue("@date", DateTime.Now);
+
+                        int rowsInserted = command.ExecuteNonQuery();
+                        if (rowsInserted > 0)
+                            Console.WriteLine("Successfully added game to Database!");
+                        else
+                            Console.WriteLine("No rows were inserted!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Could not add to Database!\n" + ex.Message);
+                }
+            }
+        }
     }
 
 }
-
-

@@ -54,7 +54,6 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.User1Label = new System.Windows.Forms.Label();
             this.User2Label = new System.Windows.Forms.Label();
-            this.testLabel = new System.Windows.Forms.Label();
             this.leftSettingsPanel = new System.Windows.Forms.Panel();
             this.backButton = new System.Windows.Forms.Button();
             this.settingsAccentPanel = new System.Windows.Forms.Panel();
@@ -346,18 +345,6 @@
             this.User2Label.TabIndex = 3;
             this.User2Label.Text = "Player2";
             // 
-            // testLabel
-            // 
-            this.testLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.testLabel.AutoSize = true;
-            this.testLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.testLabel.ForeColor = System.Drawing.SystemColors.Control;
-            this.testLabel.Location = new System.Drawing.Point(536, 16);
-            this.testLabel.Name = "testLabel";
-            this.testLabel.Size = new System.Drawing.Size(109, 33);
-            this.testLabel.TabIndex = 4;
-            this.testLabel.Text = "label17";
-            // 
             // leftSettingsPanel
             // 
             this.leftSettingsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
@@ -514,6 +501,7 @@
             this.p2ResignButton.Size = new System.Drawing.Size(20, 23);
             this.p2ResignButton.TabIndex = 8;
             this.p2ResignButton.UseVisualStyleBackColor = true;
+            this.p2ResignButton.Click += new System.EventHandler(this.p2ResignButton_Click);
             // 
             // ChessboardUI
             // 
@@ -525,7 +513,6 @@
             this.Controls.Add(this.p1ResignButton);
             this.Controls.Add(this.settingsAccentPanel);
             this.Controls.Add(this.leftSettingsPanel);
-            this.Controls.Add(this.testLabel);
             this.Controls.Add(this.User2Label);
             this.Controls.Add(this.User1Label);
             this.Controls.Add(this.timerPanel);
@@ -560,7 +547,6 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label User1Label;
         private System.Windows.Forms.Label User2Label;
-        private System.Windows.Forms.Label testLabel;
         private System.Windows.Forms.Panel leftSettingsPanel;
         private System.Windows.Forms.Button backButton;
         private System.Windows.Forms.Panel gameOverPanel;

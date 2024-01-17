@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Threading.Tasks;
+using System.Media;
 using System.Windows.Forms;
 
 namespace ChessGame
@@ -14,7 +14,7 @@ namespace ChessGame
         int whiteTime;
         int blackTime;
         Utility utility = new Utility();
-        //---------------------------------------------Start Board---------------------------------------------//
+        //---------------------------------------------Start Game---------------------------------------------//
         public ChessboardUI(MainMenu menu, Utility util)
         {
             InitializeComponent();
@@ -26,7 +26,11 @@ namespace ChessGame
 
             mainMenu = menu;
             User1Label.Text = utility.pNames[0];
-            User2Label.Text = utility.pNames[1];
+            if (!utility.engineToPlay)
+                User2Label.Text = utility.pNames[1];
+            else
+                User2Label.Text = "STOCKFISH";
+
             whiteSideTimerLabel.Text = Utility.FormatTime(time);
             blackSideTimerLabel.Text = Utility.FormatTime(time);
         }
@@ -35,12 +39,14 @@ namespace ChessGame
         {
             InitializeBoard(); // Fixes the squares
             utility.StartStockfish();
+            utility.InitializeTable();
         }
 
         List<Panel> squareList = new List<Panel>();
         ChessBoard chessboard = new ChessBoard();
         private void InitializeBoard()
         {
+
             int squareSize = ChessboardSquaresPanel.Size.Width / 8; // Since it's square we don't need height as well
 
             for (int row = 0; row < 8; row++)
@@ -58,41 +64,46 @@ namespace ChessGame
 
                     panel.BackgroundImageLayout = ImageLayout.Zoom;
 
-
                     squareList.Add(panel);
                     ChessboardSquaresPanel.Controls.Add(panel);
                 }
             }
             updateSpecialMoveVisuals();
+            playSFX("startGame");
         }
+
 
         //---------------------------------------------Movement---------------------------------------------//
         string place1 = string.Empty;
-        char prevPiece;
         private void panel_MouseClick(object sender, EventArgs e)
         {
-           
             Panel curPanel = sender as Panel;
 
             string location = curPanel.Tag.ToString();
 
-            int row = (int)Char.GetNumericValue(location[1]);
+            int row = (int)Char.GetNumericValue(location[1]) - 1;
             int col = ChessBoard.getNumberFromCol(location[0]);
 
-            char curPiece = chessboard.Chessboard[row - 1][col];
-            if (place1 == string.Empty && curPiece != ' ' && Char.IsUpper(curPiece) == chessboard.turn)
+            char curPiece = chessboard.Chessboard[row][col];
+            if (curPiece != ' ' && Char.IsUpper(curPiece) == chessboard.turn)
             {
                 place1 = location;
             }
-            else if (place1 != string.Empty) 
+            else if (place1 != string.Empty)
             {
                 string executeMove = place1 + location;
                 chessboard.generateLegalMoves(place1);
                 if (chessboard.LegalMoves.Contains(executeMove))
                 {   // Here the move is executed
-                    chessboard.ExecuteMove(executeMove);
+                    chessboard.ExecuteMove(executeMove, utility);
                     MoveUpdates(executeMove);
                     stockfishToPlay();
+                    byte checkCheck = chessboard.checkMate;
+                    if (checkCheck != 0)
+                    {
+                        string pWon = ChessBoard.CheckBit(checkCheck, 0) ? User1Label.Text : User2Label.Text;
+                        playerWon(pWon);
+                    }
                 }
                 place1 = string.Empty;
             }
@@ -103,28 +114,45 @@ namespace ChessGame
             if (utility.engineToPlay)
             {
                 string executeMove = utility.GetStockfishMove(chessboard.toFEN());
-                chessboard.ExecuteMove(executeMove);
-
-                // Wait for 200 milliseconds
-                // Task.Delay(1200).Wait();
+                chessboard.ExecuteMove(executeMove, utility);
 
                 MoveUpdates(executeMove);
             }
         }
 
-
-        //---------------------------------------------Tools---------------------------------------------//
         private void playerWon(string player)
         {
-
+            foreach (Panel panel in squareList)
+            {
+                panel.MouseClick -= panel_MouseClick;
+            }
+            playerWonLabel.Text = player + " Won!";
+            gameOverPanel.Visible = true;
+            timer1.Stop();
+            playSFX("gameEnd");
+            utility.StopStockfish();
         }
 
-        private void EnableTimerIfNotEnabled()
+
+        //---------------------------------------------Tools---------------------------------------------//
+        //---Visuals
+        private void updateChessboardVisual(string move)
         {
-            if (!timer1.Enabled)
-            {
-                timer1.Enabled = true;
-            }
+            string[] sepMoves = move.Split(' ');
+
+            // Get the coordinates for the moves selected
+            int curCol = ChessBoard.getNumberFromCol(move[0]); ;
+            int curRow = int.Parse(move[1].ToString()) - 1;
+            int curIndex = 7 - curRow + 8 * curCol;
+
+
+            int tarCol = ChessBoard.getNumberFromCol(move[2]);
+            int tarRow = int.Parse(move[3].ToString()) - 1;
+            int tarIndex = 7 - tarRow + 8 * tarCol;
+
+            // Fix the icons accordingly 
+            squareList[tarIndex].BackgroundImage = squareList[curIndex].BackgroundImage;
+            squareList[curIndex].BackgroundImage = null;
         }
 
         private void updateSpecialMoveVisuals()
@@ -148,46 +176,6 @@ namespace ChessGame
                     }
                 }
             }
-        }
-
-        private void fixTimerColors()
-        {
-            if (chessboard.turn)
-            {
-                whiteSideTimerLabel.ForeColor = Color.Black;
-                whiteSideTimerPanel.BackColor = Color.White;
-
-                blackSideTimerLabel.ForeColor = Color.White;
-                blackSideTimerPanel.BackColor = Color.Black;
-            }
-            else
-            {
-                blackSideTimerLabel.ForeColor = Color.Black;
-                blackSideTimerPanel.BackColor = Color.White;
-
-                whiteSideTimerLabel.ForeColor = Color.White;
-                whiteSideTimerPanel.BackColor = Color.Black;
-            }
-        }
-
-        private void updateChessboardVisual(string move)
-        {
-            string[] sepMoves = move.Split(' ');
-
-            // Get the coordinates for the moves selected
-            int curCol = ChessBoard.getNumberFromCol(move[0]); ;
-            int curRow = int.Parse(move[1].ToString()) - 1;
-            int curIndex = 7 - curRow + 8 * curCol;
-
-
-            int tarCol = ChessBoard.getNumberFromCol(move[2]);
-            int tarRow = int.Parse(move[3].ToString()) - 1;
-            int tarIndex = 7 - tarRow + 8 * tarCol;
-
-            // Fix the icons accordingly 
-
-            squareList[tarIndex].BackgroundImage = squareList[curIndex].BackgroundImage;
-            squareList[curIndex].BackgroundImage = null;
         }
 
         private string FetchPieceImage(char curPiece)
@@ -218,6 +206,21 @@ namespace ChessGame
             return piece;
         }
 
+        private void MoveUpdates(string executeMove)
+        {
+            // UI Updates
+            updateChessboardVisual(executeMove);
+            if (chessboard.specialMove) updateSpecialMoveVisuals();
+
+            string sfx = chessboard.turn ? "wMove" : "bMove";
+            playSFX(sfx);
+            chessboard.turn = !chessboard.turn;
+
+            // Timer handling
+            EnableTimerIfNotEnabled();
+            fixTimerColors();
+        }
+        //---Timer
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (chessboard.turn)
@@ -243,6 +246,41 @@ namespace ChessGame
             }
         }
 
+        private void EnableTimerIfNotEnabled()
+        {
+            if (!timer1.Enabled)
+            {
+                timer1.Enabled = true;
+            }
+        }
+
+        private void fixTimerColors()
+        {
+            if (chessboard.turn)
+            {
+                whiteSideTimerLabel.ForeColor = Color.Black;
+                whiteSideTimerPanel.BackColor = Color.White;
+
+                blackSideTimerLabel.ForeColor = Color.White;
+                blackSideTimerPanel.BackColor = Color.Black;
+            }
+            else
+            {
+                blackSideTimerLabel.ForeColor = Color.Black;
+                blackSideTimerPanel.BackColor = Color.White;
+
+                whiteSideTimerLabel.ForeColor = Color.White;
+                whiteSideTimerPanel.BackColor = Color.Black;
+            }
+        }
+
+        //---Other
+        private void playSFX(string soundEffect)
+        {
+            SoundPlayer player = new SoundPlayer(Properties.Resources.ResourceManager.GetStream(soundEffect));
+            player.Play();
+        }
+
         private void ChessboardUI_FormClosed(object sender, FormClosedEventArgs e)
         {
             mainMenu.Show();
@@ -253,21 +291,14 @@ namespace ChessGame
             Close();
         }
 
-        private void MoveUpdates(string executeMove)
-        {
-            // UI Updates
-            updateChessboardVisual(executeMove);
-            if (chessboard.specialMove) updateSpecialMoveVisuals();
-            chessboard.turn = !chessboard.turn;
-
-            // Timer handling
-            EnableTimerIfNotEnabled();
-            fixTimerColors();
-        }
-
         private void p1ResignButton_Click(object sender, EventArgs e)
         {
+            playerWon(User2Label.Text);
+        }
 
+        private void p2ResignButton_Click(object sender, EventArgs e)
+        {
+            playerWon(User1Label.Text);
         }
     }
 }

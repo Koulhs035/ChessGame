@@ -175,4 +175,16 @@
   <data name="resign" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\resign.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="bMove" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bMove.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gameEnd" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gameEnd.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="startGame" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\startGameSFX.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="wMove" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wMove.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

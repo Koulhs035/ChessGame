@@ -47,6 +47,7 @@ namespace ChessGame
             gameSettingsPanel.Visible = false;
             ChessboardUI chessboardUI = new ChessboardUI(this, utility);
             chessboardUI.Show();
+            Hide();
 
         }
     }

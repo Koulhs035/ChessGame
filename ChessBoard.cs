@@ -20,7 +20,7 @@ namespace ChessGame
         private const int CASTLE = 0;
         private const int BENP = 1; // Black en-passant
         private const int WENP = 2; // White en-passant
-        // If white piece has moved forward with 2 moves, it assigns to its color the en-passant
+        // If white piece has moved forward with 2 moves, it assigns to its color for en-passant
 
 
         public bool turn; // True for white, False for black
@@ -344,8 +344,7 @@ namespace ChessGame
         }
 
         //---------------------------------------------Tools---------------------------------------------//
-
-        private byte SetBit(byte curByte, int pos, bool set)
+        private static byte SetBit(byte curByte, int pos, bool set)
         {
             if (set)
             {
@@ -358,7 +357,7 @@ namespace ChessGame
             return curByte;
         }
 
-        private bool CheckBit(byte value, int bitPosition)
+        public static bool CheckBit(byte value, int bitPosition)
         {
             // Creating a mask with only the bit at the specified position set to 1
             byte mask = (byte)(1 << bitPosition);
@@ -367,7 +366,7 @@ namespace ChessGame
             return (value & mask) != 0;
         }
 
-        private int GetFirstSetBit(byte value)
+        private static int GetFirstSetBit(byte value)
         {
             for (int i = 0; i < 8; i++)
             {
@@ -404,12 +403,15 @@ namespace ChessGame
 
         public static char[] letters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
         //---------------------------------------------Move Execution & Notation---------------------------------------------//
-        public bool specialMove; 
-        public string movesDone;
-        public void ExecuteMove(string move)
+        public bool specialMove;
+
+        public byte checkMate = 0; // 0000011 the first is white checkmated, the second is black checkmate. If byte == 0 then the game goes on
+
+        public void ExecuteMove(string move, Utility utility)
         {
             // The first location e.g. b1 is the piece we selected to move
             // The second one is the target location
+            // Notation example e2e4
 
 
             // Get the coordinates for the moves selected
@@ -525,14 +527,24 @@ namespace ChessGame
                         else if (tarCol == 7 || curCol == 7) // King's side
                             specialMoves[CASTLE] = SetBit(specialMoves[CASTLE], 7, false);
                     }
+
                     break;
             }
 
             // Update the chessboard
             Chessboard[tarRow][tarCol] = Chessboard[curRow][curCol];
             Chessboard[curRow][curCol] = ' ';
+            string tempFen = toFEN();
+            utility.movesDone += tempFen + '\n'; // This will be used to store the game progression in our database
+            if (utility.GetStockfishMove(tempFen) == "Illegal")
+            {
 
-            movesDone += toFEN() + '\n'; // This will be used to store the game progression in our database
+                if (turn)
+                    checkMate = SetBit(checkMate, 0, true);
+                else
+                    checkMate = SetBit(checkMate, 1, true);
+            }
+
         }
 
         public string toFEN()
