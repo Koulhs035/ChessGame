@@ -14,7 +14,7 @@ namespace ChessGame
 
         // Stockfish settings
         public bool engineToPlay = false;
-        public int searchDepth = 10;
+        public int searchDepth = 1;
 
         // Database
         public string movesDone = string.Empty;

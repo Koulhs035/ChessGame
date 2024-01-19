@@ -28,10 +28,11 @@ namespace ChessGame
             if (player1TextBox.Text != player2TextBox.Text)
             {
                 utility.engineToPlay = false;
-                ChessboardUI chessboardUI = new ChessboardUI(this, utility);
-                chessboardUI.Show();
+                
                 utility.pNames[0] = player1TextBox.Text;
                 utility.pNames[1] = player2TextBox.Text;
+                ChessboardUI chessboardUI = new ChessboardUI(this, utility);
+                chessboardUI.Show();
                 Hide();
             }
             else

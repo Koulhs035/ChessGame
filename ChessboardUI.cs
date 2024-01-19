@@ -37,16 +37,18 @@ namespace ChessGame
 
         private void ChessboardUI_Load(object sender, EventArgs e)
         {
+            chessboard = new ChessBoard();
+            chessboard.generateMoves();
             InitializeBoard(); // Fixes the squares
             utility.StartStockfish();
             utility.InitializeTable();
+            
         }
 
         List<Panel> squareList = new List<Panel>();
-        ChessBoard chessboard = new ChessBoard();
+        ChessBoard chessboard;
         private void InitializeBoard()
         {
-
             int squareSize = ChessboardSquaresPanel.Size.Width / 8; // Since it's square we don't need height as well
 
             for (int row = 0; row < 8; row++)
@@ -84,7 +86,7 @@ namespace ChessGame
             int row = (int)Char.GetNumericValue(location[1]) - 1;
             int col = ChessBoard.getNumberFromCol(location[0]);
 
-            char curPiece = chessboard.Chessboard[row][col];
+            char curPiece = chessboard.Chessboard[row, col];
             if (curPiece != ' ' && Char.IsUpper(curPiece) == chessboard.turn)
             {
                 place1 = location;
@@ -92,18 +94,11 @@ namespace ChessGame
             else if (place1 != string.Empty)
             {
                 string executeMove = place1 + location;
-                chessboard.generateLegalMoves(place1);
                 if (chessboard.LegalMoves.Contains(executeMove))
                 {   // Here the move is executed
                     chessboard.ExecuteMove(executeMove, utility);
                     MoveUpdates(executeMove);
                     stockfishToPlay();
-                    byte checkCheck = chessboard.checkMate;
-                    if (checkCheck != 0)
-                    {
-                        string pWon = ChessBoard.CheckBit(checkCheck, 0) ? User1Label.Text : User2Label.Text;
-                        playerWon(pWon);
-                    }
                 }
                 place1 = string.Empty;
             }
@@ -169,7 +164,7 @@ namespace ChessGame
             {
                 for (int col = 0; col < 8; col++)
                 {
-                    curPiece = chessboard.Chessboard[row][col];
+                    curPiece = chessboard.Chessboard[row, col];
 
                     index = 7 - row + 8 * col;
                     if (curPiece == ' ') squareList[index].BackgroundImage = null;
@@ -219,6 +214,12 @@ namespace ChessGame
             string sfx = chessboard.turn ? "wMove" : "bMove";
             playSFX(sfx);
             chessboard.turn = !chessboard.turn;
+            chessboard.generateMoves();
+            if (chessboard.LegalMoves.Count == 0)
+            {
+                string pWon = !chessboard.turn ? User1Label.Text : User2Label.Text;
+                playerWon(pWon);
+            }
 
             // Timer handling
             EnableTimerIfNotEnabled();
@@ -304,6 +305,21 @@ namespace ChessGame
         private void p2ResignButton_Click(object sender, EventArgs e)
         {
             playerWon(User1Label.Text);
+        }
+
+        private void playAgainButton_Click(object sender, EventArgs e)
+        {
+
+            gameOverPanel.Hide();
+            chessboard = new ChessBoard();
+            chessboard.generateMoves();
+            blackTime = utility.timeControl;
+            whiteTime = utility.timeControl;
+
+            foreach (Panel square in squareList) square.MouseClick += panel_MouseClick;
+            updateSpecialMoveVisuals();
+            utility.StartStockfish();
+            playSFX("startGame");
         }
     }
 }

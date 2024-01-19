@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
             this.gameSettingsPanel = new System.Windows.Forms.Panel();
+            this.playButton = new System.Windows.Forms.Button();
             this.min30Button = new System.Windows.Forms.Button();
             this.min15Button = new System.Windows.Forms.Button();
             this.min10Button = new System.Windows.Forms.Button();
@@ -47,7 +48,6 @@
             this.player1TextBox = new System.Windows.Forms.TextBox();
             this.player1Label = new System.Windows.Forms.Label();
             this.gameSettingsAccentPanel = new System.Windows.Forms.Panel();
-            this.playButton = new System.Windows.Forms.Button();
             this.playAiButton = new System.Windows.Forms.Button();
             this.PlayLocalButton = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -81,6 +81,7 @@
             this.gameSettingsPanel.Controls.Add(this.player1TextBox);
             this.gameSettingsPanel.Controls.Add(this.player1Label);
             this.gameSettingsPanel.Controls.Add(this.gameSettingsAccentPanel);
+            this.gameSettingsPanel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.gameSettingsPanel.ForeColor = System.Drawing.Color.White;
             this.gameSettingsPanel.Location = new System.Drawing.Point(486, 324);
             this.gameSettingsPanel.Name = "gameSettingsPanel";
@@ -88,9 +89,29 @@
             this.gameSettingsPanel.TabIndex = 2;
             this.gameSettingsPanel.Visible = false;
             // 
+            // playButton
+            // 
+            this.playButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.playButton.BackgroundImage = global::ChessGame.Properties.Resources.smooth_gray_wooden_textured_background_vector;
+            this.playButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.playButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.playButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.playButton.FlatAppearance.BorderSize = 3;
+            this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.playButton.Font = new System.Drawing.Font("Ebrima", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.playButton.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.playButton.Location = new System.Drawing.Point(134, 233);
+            this.playButton.Name = "playButton";
+            this.playButton.Size = new System.Drawing.Size(117, 39);
+            this.playButton.TabIndex = 3;
+            this.playButton.Text = "Play";
+            this.playButton.UseVisualStyleBackColor = true;
+            this.playButton.Click += new System.EventHandler(this.playButton_Click);
+            // 
             // min30Button
             // 
             this.min30Button.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.min30Button.Cursor = System.Windows.Forms.Cursors.Hand;
             this.min30Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.min30Button.ForeColor = System.Drawing.Color.White;
             this.min30Button.Location = new System.Drawing.Point(299, 204);
@@ -105,6 +126,7 @@
             // min15Button
             // 
             this.min15Button.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.min15Button.Cursor = System.Windows.Forms.Cursors.Hand;
             this.min15Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.min15Button.ForeColor = System.Drawing.Color.White;
             this.min15Button.Location = new System.Drawing.Point(158, 204);
@@ -119,6 +141,7 @@
             // min10Button
             // 
             this.min10Button.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.min10Button.Cursor = System.Windows.Forms.Cursors.Hand;
             this.min10Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.min10Button.ForeColor = System.Drawing.Color.White;
             this.min10Button.Location = new System.Drawing.Point(17, 204);
@@ -133,6 +156,7 @@
             // min7Button
             // 
             this.min7Button.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.min7Button.Cursor = System.Windows.Forms.Cursors.Hand;
             this.min7Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.min7Button.ForeColor = System.Drawing.Color.White;
             this.min7Button.Location = new System.Drawing.Point(299, 154);
@@ -147,6 +171,7 @@
             // min5Button
             // 
             this.min5Button.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.min5Button.Cursor = System.Windows.Forms.Cursors.Hand;
             this.min5Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.min5Button.ForeColor = System.Drawing.Color.White;
             this.min5Button.Location = new System.Drawing.Point(158, 154);
@@ -161,6 +186,7 @@
             // min3Button
             // 
             this.min3Button.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.min3Button.Cursor = System.Windows.Forms.Cursors.Hand;
             this.min3Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.min3Button.ForeColor = System.Drawing.Color.White;
             this.min3Button.Location = new System.Drawing.Point(17, 154);
@@ -175,6 +201,7 @@
             // min2Button
             // 
             this.min2Button.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.min2Button.Cursor = System.Windows.Forms.Cursors.Hand;
             this.min2Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.min2Button.ForeColor = System.Drawing.Color.White;
             this.min2Button.Location = new System.Drawing.Point(299, 104);
@@ -189,6 +216,7 @@
             // min1Button
             // 
             this.min1Button.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.min1Button.Cursor = System.Windows.Forms.Cursors.Hand;
             this.min1Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.min1Button.ForeColor = System.Drawing.Color.White;
             this.min1Button.Location = new System.Drawing.Point(158, 104);
@@ -225,6 +253,7 @@
             // sec30Button
             // 
             this.sec30Button.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.sec30Button.Cursor = System.Windows.Forms.Cursors.Hand;
             this.sec30Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.sec30Button.ForeColor = System.Drawing.Color.White;
             this.sec30Button.Location = new System.Drawing.Point(17, 104);
@@ -301,29 +330,12 @@
             this.gameSettingsAccentPanel.Size = new System.Drawing.Size(388, 5);
             this.gameSettingsAccentPanel.TabIndex = 3;
             // 
-            // playButton
-            // 
-            this.playButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.playButton.BackgroundImage = global::ChessGame.Properties.Resources.smooth_gray_wooden_textured_background_vector;
-            this.playButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.playButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.playButton.FlatAppearance.BorderSize = 3;
-            this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.playButton.Font = new System.Drawing.Font("Ebrima", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.playButton.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.playButton.Location = new System.Drawing.Point(134, 233);
-            this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(117, 39);
-            this.playButton.TabIndex = 3;
-            this.playButton.Text = "Play";
-            this.playButton.UseVisualStyleBackColor = true;
-            this.playButton.Click += new System.EventHandler(this.playButton_Click);
-            // 
             // playAiButton
             // 
             this.playAiButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.playAiButton.BackgroundImage = global::ChessGame.Properties.Resources.smooth_gray_wooden_textured_background_vector;
             this.playAiButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.playAiButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.playAiButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.playAiButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.playAiButton.Font = new System.Drawing.Font("Ebrima", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -341,6 +353,7 @@
             this.PlayLocalButton.BackColor = System.Drawing.Color.White;
             this.PlayLocalButton.BackgroundImage = global::ChessGame.Properties.Resources.smooth_gray_wooden_textured_background_vector;
             this.PlayLocalButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.PlayLocalButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PlayLocalButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.PlayLocalButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.PlayLocalButton.Font = new System.Drawing.Font("Ebrima", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
